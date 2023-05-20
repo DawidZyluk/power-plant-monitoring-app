@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:mewa/data/dummy_data.dart';
+import 'package:mewa/widgets/category_grid_item.dart';
 
-class ParametersScreen extends StatelessWidget {
+class CategoriesScreen extends StatelessWidget {
 
-  const ParametersScreen({super.key});
+  const CategoriesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: const Text("All parameters"),
+        title: const Text("Kategorie odczytów"),
       ),
       body: GridView(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -18,7 +19,8 @@ class ParametersScreen extends StatelessWidget {
           crossAxisSpacing: 20,
           mainAxisSpacing: 20 ),
         children: [
-          
+          for(final category in availableCategories) 
+            CategoryGridItem(category: category)
         ],
       ),
     );
