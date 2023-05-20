@@ -13,6 +13,6 @@ class ElectricReadings {
   final int phase1Id;
   final int phase2Id;
   final int phase3Id;
-  final int powerActiveAvg;
+  final double powerActiveAvg;
 
 }

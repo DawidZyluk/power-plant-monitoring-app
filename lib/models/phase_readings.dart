@@ -1,5 +1,5 @@
-class Phase {
-  const Phase({
+class PhaseReadings {
+  const PhaseReadings({
     required this.id,
     required this.voltage,
     required this.current,
