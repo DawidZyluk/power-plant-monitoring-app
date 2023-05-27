@@ -1,11 +1,10 @@
-class ElectricReadings {
-  const ElectricReadings({
+class CombinedPhases {
+  const CombinedPhases({
     required this.id,
     required this.timestamp,
     required this.phase1Id,
     required this.phase2Id,
     required this.phase3Id,
-    required this.powerActiveAvg,
   });
 
   final int id;
@@ -13,6 +12,4 @@ class ElectricReadings {
   final int phase1Id;
   final int phase2Id;
   final int phase3Id;
-  final double powerActiveAvg;
-
 }

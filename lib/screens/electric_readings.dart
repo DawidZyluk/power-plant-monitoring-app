@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mewa/models/electric_readings.dart';
+import 'package:mewa/models/combined_phases.dart';
 import 'package:mewa/widgets/electric_reading.dart';
 
 class ElectricReadingsScreen extends StatelessWidget {
