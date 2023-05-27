@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mewa/data/dummy_data.dart';
 import 'package:mewa/models/category.dart';
-import 'package:mewa/screens/electric_readings.dart';
+import 'package:mewa/screens/combined_phases.dart';
+import 'package:mewa/screens/electric_avg.dart';
 import 'package:mewa/screens/water_readings.dart';
 import 'package:mewa/widgets/category_grid_item.dart';
 import 'package:mewa/screens/phase_readings.dart';
@@ -11,11 +12,9 @@ class CategoriesScreen extends StatelessWidget {
 
   void _selectCategory(BuildContext context, Category category) {
     Widget screen = PhaseReadingsScreen(title: category.title, readings: []);
-    if(category.id == "c1") screen = PhaseReadingsScreen(title: category.title, readings: phase1);
-    if(category.id == "c2") screen = PhaseReadingsScreen(title: category.title, readings: phase2);
-    if(category.id == "c3") screen = PhaseReadingsScreen(title: category.title, readings: phase3);
-    if(category.id == "c4") screen = ElectricReadingsScreen(title: category.title, readings: electricReadings);
-    if(category.id == "c5") screen = WaterReadingsScreen(title: category.title, readings: waterReadings);
+    if(category.id == "c1") screen = CombinedPhasesScreen(title: category.title, readings: combinedPhases);
+    if(category.id == "c2") screen = ElectricAvgScreen(title: category.title, readings: electricAvg);
+    if(category.id == "c3") screen = WaterReadingsScreen(title: category.title, readings: waterReadings);
 
     Navigator.of(context).push(MaterialPageRoute(
         builder: (ctx) => screen));
@@ -24,16 +23,14 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(30, 61, 129, 1),
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(0, 28, 88, 1),
         title: const Text("Kategorie odczytów"),
       ),
-      body: GridView(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 3 / 2,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20),
+      body: ListView(
         children: [
+          const SizedBox(height: 30,),
           for (final category in availableCategories)
             CategoryGridItem(
               category: category,

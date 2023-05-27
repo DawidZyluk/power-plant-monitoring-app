@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:mewa/models/combined_phases.dart';
-import 'package:mewa/widgets/electric_reading.dart';
+import 'package:mewa/widgets/combined_phases.dart';
 
-class ElectricReadingsScreen extends StatelessWidget {
-  const ElectricReadingsScreen({super.key, required this.title, required this.readings});
+class CombinedPhasesScreen extends StatelessWidget {
+  const CombinedPhasesScreen({super.key, required this.title, required this.readings});
 
   final String title;
-  final List<ElectricReadings> readings;
+  final List<CombinedPhases> readings;
 
   @override
   Widget build(BuildContext context) {
     Widget content = ListView.builder(
         itemCount: readings.length,
-        itemBuilder: (ctx, index) => ElectricReading(reading: readings[index]));
+        itemBuilder: (ctx, index) => CombinedPhasesWidget(reading: readings[index]));
 
     if (readings.isEmpty) {
       content = Center(

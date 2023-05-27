@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mewa/models/electric_readings.dart';
+import 'package:mewa/models/combined_phases.dart';
 
-class ElectricReading extends StatelessWidget {
-  const ElectricReading({super.key, required this.reading});
+class CombinedPhasesWidget extends StatelessWidget {
+  const CombinedPhasesWidget({super.key, required this.reading});
   
 
-
-  final ElectricReadings reading;
+  final CombinedPhases reading;
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +25,6 @@ class ElectricReading extends StatelessWidget {
             Text('phase 1 id: ${reading.phase1Id.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
             Text('phase 2 id: ${reading.phase2Id.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
             Text('phase 3 id: ${reading.phase3Id.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
-          ]),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-            Text('powerActiveAvg: ${reading.powerActiveAvg.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
           ]),
         ],
       )
