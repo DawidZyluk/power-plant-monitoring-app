@@ -10,25 +10,32 @@ class ElectricAvgWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, left: 5, right: 5),
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
             children: [
-              Text('Id: ${reading.id.toString()}', style: TextStyle(color: Colors.black, fontSize: 22),),
-              Text('Id: ${reading.timestamp}', style: TextStyle(color: Colors.black, fontSize: 22),),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Id: ${reading.id.toString()}', style: TextStyle(color: Colors.white, fontSize: 22),),
+                  Text('${reading.timestamp}', style: TextStyle(color: Colors.white, fontSize: 22),),
+                ],
+              ),
+              SizedBox(height: 20,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                Text('voltage: ${reading.currentDemand.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+                Text('current: ${reading.powerActiveDemand.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+                Text('current: ${reading.powerApparentDemand.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+              ]),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-            Text('voltage: ${reading.currentDemand.toString()}', style: TextStyle(color: Colors.black, fontSize: 18),),
-            Text('current: ${reading.powerActiveDemand.toString()}', style: TextStyle(color: Colors.black, fontSize: 18),),
-            Text('current: ${reading.powerApparentDemand.toString()}', style: TextStyle(color: Colors.black, fontSize: 18),),
-          ]),
-        ],
-      )
+        )
+      ),
     );
   }
 }

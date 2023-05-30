@@ -5,7 +5,8 @@ import 'package:mewa/screens/categories.dart';
 
 final theme = ThemeData(
   scaffoldBackgroundColor: const Color.fromARGB(255, 0, 40, 85),
-  cardColor: Color.fromARGB(255, 151, 157, 172),
+  // scaffoldBackgroundColor: Color.fromARGB(255, 23, 46, 73),
+  cardColor: Color.fromARGB(90, 151, 157, 172),
   colorScheme: ColorScheme.fromSwatch().copyWith(
     primary: Colors.blue[900],
   ),
