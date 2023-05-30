@@ -23,9 +23,7 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(30, 61, 129, 1),
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(0, 28, 88, 1),
         title: const Text("Kategorie odczytów"),
       ),
       body: ListView(

@@ -16,16 +16,16 @@ class ElectricAvgWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Id: ${reading.id.toString()}', style: TextStyle(color: Colors.white, fontSize: 22),),
-              Text('Id: ${reading.timestamp}', style: TextStyle(color: Colors.white, fontSize: 22),),
+              Text('Id: ${reading.id.toString()}', style: TextStyle(color: Colors.black, fontSize: 22),),
+              Text('Id: ${reading.timestamp}', style: TextStyle(color: Colors.black, fontSize: 22),),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-            Text('voltage: ${reading.currentDemand.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
-            Text('current: ${reading.powerActiveDemand.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
-            Text('current: ${reading.powerApparentDemand.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+            Text('voltage: ${reading.currentDemand.toString()}', style: TextStyle(color: Colors.black, fontSize: 18),),
+            Text('current: ${reading.powerActiveDemand.toString()}', style: TextStyle(color: Colors.black, fontSize: 18),),
+            Text('current: ${reading.powerApparentDemand.toString()}', style: TextStyle(color: Colors.black, fontSize: 18),),
           ]),
         ],
       )

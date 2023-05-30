@@ -16,27 +16,27 @@ class WaterReading extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Id: ${reading.id.toString()}', style: TextStyle(color: Colors.white, fontSize: 22),),
-              Text(reading.timestamp, style: TextStyle(color: Colors.white, fontSize: 18),),
+              Text('Id: ${reading.id.toString()}', style: TextStyle(color: Colors.black, fontSize: 22),),
+              Text(reading.timestamp, style: TextStyle(color: Colors.black, fontSize: 18),),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-            Text('pressureStatus: ${reading.pressureStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
-            Text('diverterStatus: ${reading.diverterStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+            Text('pressureStatus: ${reading.pressureStatus.toString()}', style: TextStyle(color: Colors.black, fontSize: 18),),
+            Text('diverterStatus: ${reading.diverterStatus.toString()}', style: TextStyle(color: Colors.black, fontSize: 18),),
           ]),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-            Text('oilStatus: ${reading.oilStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
-            Text('waterStatus: ${reading.waterStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+            Text('oilStatus: ${reading.oilStatus.toString()}', style: TextStyle(color: Colors.black, fontSize: 18),),
+            Text('waterStatus: ${reading.waterStatus.toString()}', style: TextStyle(color: Colors.black, fontSize: 18),),
           ]),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-            Text('waterLevel: ${reading.waterLevel.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
-            Text('diverterPosition: ${reading.diverterPosition.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+            Text('waterLevel: ${reading.waterLevel.toString()}', style: TextStyle(color: Colors.black, fontSize: 18),),
+            Text('diverterPosition: ${reading.diverterPosition.toString()}', style: TextStyle(color: Colors.black, fontSize: 18),),
           ]),
         ],
       )

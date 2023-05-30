@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mewa/main.dart';
 import 'package:mewa/models/phase_readings.dart';
 
 class PhaseReading extends StatelessWidget {
@@ -10,8 +11,11 @@ class PhaseReading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(reading.timestamp),
+      ),
+      body: Column(
         children: [
           Row(
             children: [
@@ -31,7 +35,7 @@ class PhaseReading extends StatelessWidget {
             Text('powerReactive: ${reading.powerReactive.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
           ]),
         ],
-      )
+      ),
     );
   }
 }
