@@ -27,7 +27,6 @@ class CombinedPhasesScreen extends StatelessWidget {
         itemBuilder: (ctx, index) => CombinedPhasesWidget(
               reading: readings[index],
               onSelectCategory: (int phaseNumber) {
-                print(readings[index].phase1Id);
                 PhaseReadings phaseInfo = phase1[index];
                 if(phaseNumber == 1) phaseInfo = phase1[readings[index].phase1Id-1];
                 if(phaseNumber == 2) phaseInfo = phase2[readings[index].phase2Id-1];

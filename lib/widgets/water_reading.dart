@@ -20,30 +20,30 @@ class WaterReading extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Id: ${reading.id.toString()}', style: TextStyle(color: Colors.white, fontSize: 22),),
-                  Text(reading.timestamp, style: TextStyle(color: Colors.white, fontSize: 18),),
+                  Text('${reading.timestamp.split(" ")[1]}', style: TextStyle(color: Colors.white, fontSize: 22),),
+                  Text('${reading.timestamp.split(" ")[0]}', style: TextStyle(color: Colors.white, fontSize: 22),),
                 ],
               ),
               SizedBox(height: 20,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                Text('pressureStatus: ${reading.pressureStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
-                Text('diverterStatus: ${reading.diverterStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+                Text('Ciśnienie: ${reading.pressureStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+                Text('Odchylacze: ${reading.diverterStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
               ]),
               SizedBox(height: 20,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                Text('oilStatus: ${reading.oilStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
-                Text('waterStatus: ${reading.waterStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+                Text('Olej: ${reading.oilStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+                Text('Woda: ${reading.waterStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
               ]),
               SizedBox(height: 20,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                Text('waterLevel: ${reading.waterLevel.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
-                Text('diverterPosition: ${reading.diverterPosition.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+                Text('Poziom wody: ${reading.waterLevel.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+                Text('Pozycja odchylaczy: ${reading.diverterPosition.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
               ]),
             ],
           ),

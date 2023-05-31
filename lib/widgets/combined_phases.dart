@@ -13,7 +13,6 @@ class CombinedPhasesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     String date = reading.timestamp.split(" ")[0];
     String time = reading.timestamp.split(" ")[1];
-    print(phase1[reading.phase1Id].current);
 
     double voltageAvg = (phase1[reading.phase1Id].voltage + phase2[reading.phase2Id].voltage + phase3[reading.phase3Id].voltage) / 3;
     double currentAvg = (phase1[reading.phase1Id].current + phase2[reading.phase2Id].current + phase3[reading.phase3Id].current) / 3;
@@ -48,35 +47,35 @@ class CombinedPhasesWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Średnia napięcia: ${voltageAvg.toStringAsFixed(2)}",
+                  "${voltageAvg.toStringAsFixed(2)} V",
                   style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 Text(
-                  "Średnia prądu: ${currentAvg.toStringAsFixed(2)}",
+                  "${currentAvg.toStringAsFixed(2)} A",
                   style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 Text(
-                  "Średnia mocy aktywnej: ${powerActiveAvg.toStringAsFixed(2)}",
+                  "${powerActiveAvg.toStringAsFixed(2)} W",
                   style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 Text(
-                  "Średnia mocy biernej: ${powerReactiveAvg.toStringAsFixed(2)}",
+                  "${powerReactiveAvg.toStringAsFixed(2)} var",
                   style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 Text(
-                  "Średnia mocy pozornej: ${powerApparentAvg.toStringAsFixed(2)}",
+                  "${powerApparentAvg.toStringAsFixed(2)} VA",
                   style: TextStyle(fontSize: 18),
                 ),
               ],
