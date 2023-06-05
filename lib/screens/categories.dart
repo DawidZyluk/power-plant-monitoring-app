@@ -24,11 +24,33 @@ class CategoriesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Kategorie odczytów"),
+        title: const Text("Panel główny"),
       ),
       body: ListView(
         children: [
-          const SizedBox(height: 30,),
+          Container(
+            margin: EdgeInsets.only(bottom: 20),
+            color: Color.fromARGB(100, 10, 10, 10),
+            child: Container(
+              margin: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(100, 241, 241, 241),
+                borderRadius: BorderRadius.circular(10)
+              ),
+              child: Column(
+                children: const [
+                  Text("Status elektrowni", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                  SizedBox(height: 15,),
+                  Text("Napięcie: tak", style: TextStyle(fontSize: 16),),
+                  SizedBox(height: 10,),
+                  Text("Odchylacz: tak", style: TextStyle(fontSize: 16),),
+                  SizedBox(height: 10,),
+                  Text("Moc czynnna: 10kW", style: TextStyle(fontSize: 16),),
+                ],
+              )
+            ),
+          ),
           for (final category in availableCategories)
             CategoryGridItem(
               category: category,

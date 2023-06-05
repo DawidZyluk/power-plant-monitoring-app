@@ -94,7 +94,7 @@ class CombinedPhasesWidget extends StatelessWidget {
                       color: Colors.blueGrey[500],
                       borderRadius: BorderRadius.circular(12)),
                   child: const Text(
-                    'phase 1',
+                    'Faza 1',
                     style: TextStyle(fontSize: 18),
                   ),
                 ),
@@ -109,7 +109,7 @@ class CombinedPhasesWidget extends StatelessWidget {
                       color: Colors.blueGrey[500],
                       borderRadius: BorderRadius.circular(12)),
                   child: const Text(
-                    'phase 2',
+                    'Faza 2',
                     style: TextStyle(fontSize: 18),
                   ),
                 ),
@@ -124,7 +124,7 @@ class CombinedPhasesWidget extends StatelessWidget {
                       color: Colors.blueGrey[500],
                       borderRadius: BorderRadius.circular(12)),
                   child: const Text(
-                    'phase 3',
+                    'Faza 3',
                     style: TextStyle(fontSize: 18),
                   ),
                 ),
