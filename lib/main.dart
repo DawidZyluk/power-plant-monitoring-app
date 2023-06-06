@@ -22,7 +22,6 @@ final theme = ThemeData(
 void main() async {
   await dotenv.load(fileName: ".env");
   runApp(const App());
-  APIService.fetchData();
 }
 
 class App extends StatelessWidget {

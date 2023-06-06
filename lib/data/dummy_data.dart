@@ -5,6 +5,7 @@ import 'package:mewa/models/combined_phases.dart';
 import 'package:mewa/models/phase_readings.dart';
 import 'package:mewa/models/water_readings.dart';
 import 'package:mewa/models/electric_avg.dart';
+import 'package:mewa/services/api_service.dart';
 
 const availableCategories = [
   Category(
@@ -92,6 +93,16 @@ const phase3 = [
   PhaseReadings(id: 19, timestamp: "2023-05-27 18:04:59.206", phase: 3, voltage: 210.1, current: 2.3, powerActive: 81.7, powerReactive: 46.2, powerApparent: 34.6),
   PhaseReadings(id: 20, timestamp: "2023-05-27 18:09:59.206", phase: 3, voltage: 211.0, current: 2.2, powerActive: 86.4, powerReactive: 48.2, powerApparent: 53.7),
 ];
+
+List<CombinedPhases> cbphases = [];
+
+Future getCombinedPhases() async {
+  cbphases = [];
+  var result = await APIService.fetchCombinedPhases();
+  for(final item in result.dataset) {
+    cbphases.add(CombinedPhases(id: item[0], timestamp: item[1], phase1Id: item[2], phase2Id: item[3], phase3Id: item[4]));
+  }
+}
 
 const combinedPhases = [
   CombinedPhases(id: 1, timestamp: "2023-05-27 16:33:04.047", phase1Id: 1, phase2Id: 1, phase3Id: 1),

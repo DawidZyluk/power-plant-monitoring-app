@@ -12,16 +12,18 @@ class CategoriesScreen extends StatelessWidget {
 
   void _selectCategory(BuildContext context, Category category) {
     Widget screen = PhaseReadingsScreen(title: category.title, readings: []);
-    if(category.id == "c1") screen = CombinedPhasesScreen(title: category.title, readings: combinedPhases);
+    if(category.id == "c1") screen = CombinedPhasesScreen(title: category.title, readings: cbphases);
     if(category.id == "c2") screen = ElectricAvgScreen(title: category.title, readings: electricAvg);
     if(category.id == "c3") screen = WaterReadingsScreen(title: category.title, readings: waterReadings);
 
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (ctx) => screen));
+      builder: (ctx) => screen));
   }
 
   @override
   Widget build(BuildContext context) {
+    getCombinedPhases();
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text("Panel główny"),
