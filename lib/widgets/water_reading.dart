@@ -20,8 +20,8 @@ class WaterReading extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('${reading.timestamp.split(" ")[1]}', style: TextStyle(color: Colors.white, fontSize: 22),),
-                  Text('${reading.timestamp.split(" ")[0]}', style: TextStyle(color: Colors.white, fontSize: 22),),
+                  Text('data', style: TextStyle(color: Colors.white, fontSize: 22),),
+                  Text('data', style: TextStyle(color: Colors.white, fontSize: 22),),
                 ],
               ),
               SizedBox(height: 20,),
