@@ -10,7 +10,7 @@ class PhaseReading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(reading.timestamp),
+        title: Text('${reading.timestamp.split('T')[1].split('.')[0]} '),
       ),
       body: Container(
         height: 300,
@@ -21,10 +21,6 @@ class PhaseReading extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  'Id: ${reading.id.toString()}',
-                  style: TextStyle(color: Colors.white, fontSize: 22),
-                ),
                 SizedBox(height: 25,),
                 Text(
                   'Napięcie: ${reading.voltage.toString()} V',

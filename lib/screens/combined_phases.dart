@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mewa/data/dummy_data.dart';
+import 'package:mewa/data/data.dart';
 import 'package:mewa/models/combined_phases.dart';
 import 'package:mewa/models/phase_readings.dart';
 import 'package:mewa/widgets/combined_phases.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mewa/data/dummy_data.dart';
+import 'package:mewa/data/data.dart';
 import 'package:mewa/models/combined_phases.dart';
 
 class CombinedPhasesWidget extends StatelessWidget {

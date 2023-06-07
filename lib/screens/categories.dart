@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:mewa/data/dummy_data.dart';
+import 'package:mewa/data/data.dart';
 import 'package:mewa/models/category.dart';
 import 'package:mewa/screens/combined_phases.dart';
 import 'package:mewa/screens/electric_avg.dart';
 import 'package:mewa/screens/water_readings.dart';
 import 'package:mewa/widgets/category_grid_item.dart';
 import 'package:mewa/screens/phase_readings.dart';
+import 'package:mewa/widgets/powerplant_info.dart';
 
-class CategoriesScreen extends StatelessWidget {
+class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
+
+  @override
+  State<CategoriesScreen> createState() => _CategoriesScreenState();
+}
+
+class _CategoriesScreenState extends State<CategoriesScreen> {
+
+  String timestamp = "";
+  bool voltage = false;
+  bool diverter = false;
+  double powerActiveAvg = 0;
 
   void _selectCategory(BuildContext context, Category category) {
     Widget screen = PhaseReadingsScreen(title: category.title, readings: []);
@@ -25,6 +37,12 @@ class CategoriesScreen extends StatelessWidget {
 
     Future refresh() async {
       await getAllData().timeout(const Duration(seconds: 6));
+      setState(() {
+        timestamp = combinedPhases[0].timestamp;
+        voltage = phase1[0].voltage != 0 && phase2[0].voltage != 0 && phase3[0].voltage != 0 ? true : false;
+        diverter = waterReadings[0].diverterStatus;
+        powerActiveAvg = (phase1[0].powerActive + phase2[0].powerActive + phase3[0].powerActive) / 3;
+      });
     }
     
     return Scaffold(
@@ -35,29 +53,7 @@ class CategoriesScreen extends StatelessWidget {
         onRefresh: refresh,
         child: ListView(
           children: [
-            Container(
-              margin: EdgeInsets.only(bottom: 20),
-              color: Color.fromARGB(100, 10, 10, 10),
-              child: Container(
-                margin: const EdgeInsets.all(20),
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(100, 241, 241, 241),
-                  borderRadius: BorderRadius.circular(10)
-                ),
-                child: Column(
-                  children: const [
-                    Text("Status elektrowni", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                    SizedBox(height: 15,),
-                    Text("Napięcie: tak", style: TextStyle(fontSize: 16),),
-                    SizedBox(height: 10,),
-                    Text("Odchylacz: tak", style: TextStyle(fontSize: 16),),
-                    SizedBox(height: 10,),
-                    Text("Sumaryczna Moc czynnna: 10kW", style: TextStyle(fontSize: 16),), // suma mocy z 3 faz
-                  ],
-                )
-              ),
-            ),
+            PowerplantInfo(timestamp: timestamp, voltage: voltage, diverter: diverter,powerActiveAvg: powerActiveAvg,),
             for (final category in availableCategories)
               CategoryGridItem(
                 category: category,
