@@ -4,10 +4,10 @@ import 'package:mewa/models/combined_phases.dart';
 
 class CombinedPhasesWidget extends StatelessWidget {
   const CombinedPhasesWidget(
-      {super.key, required this.reading, required this.onSelectCategory});
+      {super.key, required this.reading, required this.onSelectPhase});
 
   final CombinedPhases reading;
-  final void Function(int phaseNumber) onSelectCategory;
+  final void Function(int phaseNumber) onSelectPhase;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +86,7 @@ class CombinedPhasesWidget extends StatelessWidget {
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               InkWell(
-                onTap: () => onSelectCategory(1),
+                onTap: () => onSelectPhase(1),
                 splashColor: Colors.grey,
                 borderRadius: BorderRadius.circular(16),
                 child: Container(
@@ -101,7 +101,7 @@ class CombinedPhasesWidget extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () => onSelectCategory(2),
+                onTap: () => onSelectPhase(2),
                 splashColor: Colors.grey,
                 borderRadius: BorderRadius.circular(16),
                 child: Container(
@@ -116,7 +116,7 @@ class CombinedPhasesWidget extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () => onSelectCategory(3),
+                onTap: () => onSelectPhase(3),
                 splashColor: Colors.grey,
                 borderRadius: BorderRadius.circular(16),
                 child: Container(

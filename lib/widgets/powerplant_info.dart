@@ -29,24 +29,24 @@ class _PowerplantInfoState extends State<PowerplantInfo> {
     if(widget.timestamp!.isNotEmpty) {
       content = Column(
               children: [
-                 SizedBox(
+                const SizedBox(
                 height: 10,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              DisplayBool(title: "Napięcie", value: widget.voltage,),
-              SizedBox(
-                height: 7,
-              ),
-              DisplayBool(title: "Odchylacz", value: widget.diverter,),
-              SizedBox(
-                height: 7,
-              ),
-              Text(
-                "średnia Moc czynnna: ${widget.powerActiveAvg!.toStringAsFixed(1)} kW",
-                style: TextStyle(fontSize: 16),
-              ), // suma mocy z 3 faz
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                DisplayBool(title: "Napięcie", value: widget.voltage,),
+                const SizedBox(
+                  height: 7,
+                ),
+                DisplayBool(title: "Odchylacz", value: widget.diverter,),
+                const SizedBox(
+                  height: 7,
+                ),
+                Text(
+                  "średnia Moc czynnna: ${widget.powerActiveAvg!.toStringAsFixed(1)} kW",
+                  style: TextStyle(fontSize: 16),
+                ), // suma mocy z 3 faz
               ],
              );
     }

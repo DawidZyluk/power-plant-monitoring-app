@@ -46,23 +46,23 @@ Future getPhase(String phase) async {
     phase1 = [];
     var result = await APIService.fetchPhase('1');
     for(final item in result.dataset) {
-      phase1.add(PhaseReadings(id: item[0], timestamp: item[1], phase: item[2], voltage: item[3], current: item[4], powerActive: item[4], powerReactive: item[4], powerApparent: item[4]));
+      phase1.add(PhaseReadings(id: item[0], timestamp: item[1], phase: item[2], voltage: item[3], current: item[4], powerActive: item[5], powerReactive: item[6], powerApparent: item[7]));
   }
   }
 
   if(phase == '2') {
     phase2 = [];
-    var result = await APIService.fetchPhase('1');
+    var result = await APIService.fetchPhase('2');
     for(final item in result.dataset) {
-      phase2.add(PhaseReadings(id: item[0], timestamp: item[1], phase: item[2], voltage: item[3], current: item[4], powerActive: item[4], powerReactive: item[4], powerApparent: item[4]));
+      phase2.add(PhaseReadings(id: item[0], timestamp: item[1], phase: item[2], voltage: item[3], current: item[4], powerActive: item[5], powerReactive: item[6], powerApparent: item[7]));
     }
   }
 
   if(phase == '3') {
     phase3 = [];
-    var result = await APIService.fetchPhase('1');
+    var result = await APIService.fetchPhase('3');
     for(final item in result.dataset) {
-      phase3.add(PhaseReadings(id: item[0], timestamp: item[1], phase: item[2], voltage: item[3], current: item[4], powerActive: item[4], powerReactive: item[4], powerApparent: item[4]));
+      phase3.add(PhaseReadings(id: item[0], timestamp: item[1], phase: item[2], voltage: item[3], current: item[4], powerActive: item[5], powerReactive: item[6], powerApparent: item[7]));
     }
   }
 }

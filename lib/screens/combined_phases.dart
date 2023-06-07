@@ -12,7 +12,7 @@ class CombinedPhasesScreen extends StatelessWidget {
   final String title;
   final List<CombinedPhases> readings;
 
-  void _selectCategory(BuildContext context, PhaseReadings readings) {
+  void _selectPhase(BuildContext context, PhaseReadings readings) {
     Widget screen = PhaseReading(reading: readings);
 
     Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => screen));
@@ -50,12 +50,12 @@ class CombinedPhasesScreen extends StatelessWidget {
         itemCount: readings.length,
         itemBuilder: (ctx, index) => CombinedPhasesWidget(
               reading: readings[index],
-              onSelectCategory: (int phaseNumber) {
+              onSelectPhase: (int phaseNumber) {
                 PhaseReadings phaseInfo = phase1[index];
                 if(phaseNumber == 1) phaseInfo = phase1[readings[index].phase1Id-1];
                 if(phaseNumber == 2) phaseInfo = phase2[readings[index].phase2Id-1];
                 if(phaseNumber == 3) phaseInfo = phase3[readings[index].phase3Id-1];
-                _selectCategory(context, phaseInfo);
+                _selectPhase(context, phaseInfo);
               },
             )
           );
