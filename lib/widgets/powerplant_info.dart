@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mewa/widgets/display_bool.dart';
 
 class PowerplantInfo extends StatefulWidget {
   final String? timestamp;
@@ -31,19 +32,16 @@ class _PowerplantInfoState extends State<PowerplantInfo> {
                  SizedBox(
                 height: 10,
               ),
-              Text(
-                "Napięcie: ${widget.voltage}",
-                style: TextStyle(fontSize: 16),
-              ),
               SizedBox(
                 height: 10,
               ),
-              Text(
-                "Odchylacz: ${widget.diverter}",
-                style: TextStyle(fontSize: 16),
-              ),
+              DisplayBool(title: "Napięcie", value: widget.voltage,),
               SizedBox(
-                height: 10,
+                height: 7,
+              ),
+              DisplayBool(title: "Odchylacz", value: widget.diverter,),
+              SizedBox(
+                height: 7,
               ),
               Text(
                 "średnia Moc czynnna: ${widget.powerActiveAvg!.toStringAsFixed(1)} kW",
