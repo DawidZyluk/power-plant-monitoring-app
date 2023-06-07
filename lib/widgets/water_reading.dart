@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mewa/models/water_readings.dart';
+import 'package:mewa/widgets/display_bool.dart';
 
 class WaterReading extends StatelessWidget {
   const WaterReading({super.key, required this.reading});
@@ -32,15 +33,19 @@ class WaterReading extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                Text('Ciśnienie: ${reading.pressureStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
-                Text('Odchylacze: ${reading.diverterStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+                //Text('Ciśnienie: ${reading.pressureStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+                DisplayBool(title: "Ciśnienie", value: reading.pressureStatus,),
+                //Text('Odchylacze: ${reading.diverterStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+                DisplayBool(title: "Odchylacze", value: reading.diverterStatus,),
               ]),
               SizedBox(height: 20,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                Text('Olej: ${reading.oilStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
-                Text('Woda: ${reading.waterStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+                //Text('Olej: ${reading.oilStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+                DisplayBool(title: "           Olej", value: reading.oilStatus,),
+                //Text('Woda: ${reading.waterStatus.toString()}', style: TextStyle(color: Colors.white, fontSize: 18),),
+                DisplayBool(title: "Woda", value: reading.waterStatus,),
               ]),
               SizedBox(height: 20,),
               Row(
