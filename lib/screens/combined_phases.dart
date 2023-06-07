@@ -48,17 +48,20 @@ class CombinedPhasesScreen extends StatelessWidget {
     if (readings.isNotEmpty) {
       content = ListView.builder(
         itemCount: readings.length,
-        itemBuilder: (ctx, index) => CombinedPhasesWidget(
+        itemBuilder: (ctx, index) {
+          return CombinedPhasesWidget(
+              index: index,
               reading: readings[index],
               onSelectPhase: (int phaseNumber) {
                 PhaseReadings phaseInfo = phase1[index];
-                if(phaseNumber == 1) phaseInfo = phase1[readings[index].phase1Id-1];
-                if(phaseNumber == 2) phaseInfo = phase2[readings[index].phase2Id-1];
-                if(phaseNumber == 3) phaseInfo = phase3[readings[index].phase3Id-1];
+                if(phaseNumber == 1) phaseInfo = phase1[index];
+                if(phaseNumber == 2) phaseInfo = phase2[index];
+                if(phaseNumber == 3) phaseInfo = phase3[index];
                 _selectPhase(context, phaseInfo);
               },
-            )
-          );
+            );
+          }
+        );
      }
 
     return Scaffold(

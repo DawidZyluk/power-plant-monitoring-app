@@ -4,8 +4,9 @@ import 'package:mewa/models/combined_phases.dart';
 
 class CombinedPhasesWidget extends StatelessWidget {
   const CombinedPhasesWidget(
-      {super.key, required this.reading, required this.onSelectPhase});
+      {super.key, required this.index, required this.reading, required this.onSelectPhase});
 
+  final int index;
   final CombinedPhases reading;
   final void Function(int phaseNumber) onSelectPhase;
 
@@ -15,11 +16,11 @@ class CombinedPhasesWidget extends StatelessWidget {
     final date = timestamp[0];
     final time = timestamp[1].split('.')[0];
 
-    double voltageAvg = (phase1[reading.phase1Id].voltage + phase2[reading.phase2Id].voltage + phase3[reading.phase3Id].voltage) / 3;
-    double currentAvg = (phase1[reading.phase1Id].current + phase2[reading.phase2Id].current + phase3[reading.phase3Id].current) / 3;
-    double powerActiveAvg = (phase1[reading.phase1Id].powerActive + phase2[reading.phase2Id].powerActive + phase3[reading.phase3Id].powerActive) / 3;
-    double powerReactiveAvg = (phase1[reading.phase1Id].powerReactive + phase2[reading.phase2Id].powerReactive + phase3[reading.phase3Id].powerReactive) / 3;
-    double powerApparentAvg = (phase1[reading.phase1Id].powerApparent + phase2[reading.phase2Id].powerApparent + phase3[reading.phase3Id].powerApparent) / 3;
+    double voltageAvg = (phase1[index].voltage + phase2[index].voltage + phase3[index].voltage) / 3;
+    double currentAvg = (phase1[index].current + phase2[index].current + phase3[index].current) / 3;
+    double powerActiveAvg = (phase1[index].powerActive + phase2[index].powerActive + phase3[index].powerActive) / 3;
+    double powerReactiveAvg = (phase1[index].powerReactive + phase2[index].powerReactive + phase3[index].powerReactive) / 3;
+    double powerApparentAvg = (phase1[index].powerApparent + phase2[index].powerApparent + phase3[index].powerApparent) / 3;
 
     return Padding(
       padding: const EdgeInsets.only(top: 10, left: 5, right: 5),
