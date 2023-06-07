@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mewa/main.dart';
 import 'package:mewa/models/phase_readings.dart';
 
 class PhaseReading extends StatelessWidget {

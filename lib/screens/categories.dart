@@ -22,45 +22,51 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getAllData();
+
+    Future refresh() async {
+      await getAllData().timeout(const Duration(seconds: 6));
+    }
     
     return Scaffold(
       appBar: AppBar(
         title: const Text("Panel główny"),
       ),
-      body: ListView(
-        children: [
-          Container(
-            margin: EdgeInsets.only(bottom: 20),
-            color: Color.fromARGB(100, 10, 10, 10),
-            child: Container(
-              margin: const EdgeInsets.all(20),
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(100, 241, 241, 241),
-                borderRadius: BorderRadius.circular(10)
+      body: RefreshIndicator(
+        onRefresh: refresh,
+        child: ListView(
+          children: [
+            Container(
+              margin: EdgeInsets.only(bottom: 20),
+              color: Color.fromARGB(100, 10, 10, 10),
+              child: Container(
+                margin: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(100, 241, 241, 241),
+                  borderRadius: BorderRadius.circular(10)
+                ),
+                child: Column(
+                  children: const [
+                    Text("Status elektrowni", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                    SizedBox(height: 15,),
+                    Text("Napięcie: tak", style: TextStyle(fontSize: 16),),
+                    SizedBox(height: 10,),
+                    Text("Odchylacz: tak", style: TextStyle(fontSize: 16),),
+                    SizedBox(height: 10,),
+                    Text("Sumaryczna Moc czynnna: 10kW", style: TextStyle(fontSize: 16),), // suma mocy z 3 faz
+                  ],
+                )
               ),
-              child: Column(
-                children: const [
-                  Text("Status elektrowni", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                  SizedBox(height: 15,),
-                  Text("Napięcie: tak", style: TextStyle(fontSize: 16),),
-                  SizedBox(height: 10,),
-                  Text("Odchylacz: tak", style: TextStyle(fontSize: 16),),
-                  SizedBox(height: 10,),
-                  Text("Moc czynnna: 10kW", style: TextStyle(fontSize: 16),),
-                ],
-              )
             ),
-          ),
-          for (final category in availableCategories)
-            CategoryGridItem(
-              category: category,
-              onSelectCategory: () {
-                _selectCategory(context, category);
-              },
-            )
-        ],
+            for (final category in availableCategories)
+              CategoryGridItem(
+                category: category,
+                onSelectCategory: () {
+                  _selectCategory(context, category);
+                },
+              )
+          ],
+        ),
       ),
     );
   }

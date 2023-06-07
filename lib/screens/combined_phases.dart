@@ -3,7 +3,6 @@ import 'package:mewa/data/dummy_data.dart';
 import 'package:mewa/models/combined_phases.dart';
 import 'package:mewa/models/phase_readings.dart';
 import 'package:mewa/widgets/combined_phases.dart';
-import 'package:mewa/services/api_service.dart';
 import 'package:mewa/widgets/phase_reading.dart';
 
 class CombinedPhasesScreen extends StatelessWidget {
@@ -59,39 +58,7 @@ class CombinedPhasesScreen extends StatelessWidget {
                 _selectCategory(context, phaseInfo);
               },
             )
-            );
-
-    //   content = FutureBuilder(
-    //       future: APIService.fetchCombinedPhases(),
-    //       builder: (context, AsyncSnapshot snapshot) {
-    //         if (!snapshot.hasData) {
-    //           return Center(child: CircularProgressIndicator());
-    //         } else {
-    //           return Container(
-    //               child: ListView.builder(
-    //                   itemCount: snapshot.data.dataset.length,
-    //                   scrollDirection: Axis.vertical,
-    //                   itemBuilder: (BuildContext context, int index) {
-
-    //                     var item = snapshot.data.dataset[index];
-    //                     //return Text('id: ${item[0]},timestamp: ${item[1]}, phase1Id: ${item[2]}, phase2Id: ${item[3]}, phase3Id: ${item[4]}');
-                        
-    //                     return CombinedPhasesWidget(
-    //                       reading: CombinedPhases(id: item[0],timestamp: item[1], phase1Id: item[2], phase2Id: item[3], phase3Id: item[4]),
-    //                       onSelectCategory: (int phaseNumber) {
-    //                         // PhaseReadings phaseInfo = phase1[index];
-    //                         // if (phaseNumber == 1)
-    //                         //   phaseInfo = phase1[readings[index].phase1Id ];
-    //                         // if (phaseNumber == 2)
-    //                         //   phaseInfo = phase2[readings[index].phase2Id ];
-    //                         // if (phaseNumber == 3)
-    //                         //   phaseInfo = phase3[readings[index].phase3Id ];
-    //                         // _selectCategory(context, phaseInfo);
-    //                       },
-    //                     );
-    //                   }));
-    //         }
-    //       });
+          );
      }
 
     return Scaffold(

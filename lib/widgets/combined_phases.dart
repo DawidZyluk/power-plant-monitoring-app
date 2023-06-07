@@ -11,8 +11,9 @@ class CombinedPhasesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // String date = reading.timestamp.split(" ")[0];
-    // String time = reading.timestamp.split(" ")[1];
+    final timestamp = reading.timestamp.split('T');
+    final date = timestamp[0];
+    final time = timestamp[1].split('.')[0];
 
     double voltageAvg = (phase1[reading.phase1Id].voltage + phase2[reading.phase2Id].voltage + phase3[reading.phase3Id].voltage) / 3;
     double currentAvg = (phase1[reading.phase1Id].current + phase2[reading.phase2Id].current + phase3[reading.phase3Id].current) / 3;
@@ -31,11 +32,11 @@ class CombinedPhasesWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "time",
+                  time,
                   style: TextStyle(fontSize: 18),
                 ),
                 Text(
-                  "date",
+                  date,
                   style: TextStyle(fontSize: 18),
                 ),
               ],

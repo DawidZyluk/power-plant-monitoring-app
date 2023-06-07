@@ -33,12 +33,12 @@ List<ElectricAvg> electricAvg= [];
 List<WaterReadings> waterReadings = [];
 
 Future getAllData() async {
-  getPhase('1');
-  getPhase('2');
-  getPhase('3');
-  getCombinedPhases();
-  getElectricAvg();
-  getWaterReadings();
+  await getPhase('1');
+  await getPhase('2');
+  await getPhase('3');
+  await getCombinedPhases();
+  await getElectricAvg();
+  await getWaterReadings();
 }
 
 Future getPhase(String phase) async {

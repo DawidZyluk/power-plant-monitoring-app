@@ -6,8 +6,13 @@ class ElectricAvgWidget extends StatelessWidget {
 
   final ElectricAvg reading;
 
+  
   @override
   Widget build(BuildContext context) {
+    final timestamp = reading.timestamp.split('T');
+    final date = timestamp[0];
+    final time = timestamp[1].split('.')[0];
+
     return Padding(
       padding: const EdgeInsets.only(top: 10, left: 5, right: 5),
       child: Card(
@@ -18,8 +23,8 @@ class ElectricAvgWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('data', style: TextStyle(color: Colors.white, fontSize: 22),),
-                  Text('data', style: TextStyle(color: Colors.white, fontSize: 22),),
+                  Text(date, style: TextStyle(color: Colors.white, fontSize: 22),),
+                  Text(time, style: TextStyle(color: Colors.white, fontSize: 22),),
                 ],
               ),
               SizedBox(height: 20,),
