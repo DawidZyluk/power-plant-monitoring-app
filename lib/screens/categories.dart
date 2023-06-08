@@ -3,6 +3,7 @@ import 'package:mewa/data/data.dart';
 import 'package:mewa/models/category.dart';
 import 'package:mewa/screens/combined_phases.dart';
 import 'package:mewa/screens/electric_avg.dart';
+import 'package:mewa/screens/power_active_chart.dart';
 import 'package:mewa/screens/water_readings.dart';
 import 'package:mewa/widgets/category_grid_item.dart';
 import 'package:mewa/screens/phase_readings.dart';
@@ -27,6 +28,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     if(category.id == "c1") screen = CombinedPhasesScreen(title: category.title);
     if(category.id == "c2") screen = ElectricAvgScreen(title: category.title, readings: electricAvg);
     if(category.id == "c3") screen = WaterReadingsScreen(title: category.title, readings: waterReadings);
+    if(category.id == "c4") screen = PowerActiveChart();
 
     Navigator.of(context).push(MaterialPageRoute(
       builder: (ctx) => screen));
@@ -34,7 +36,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     Future refresh() async {
       await getAllData().timeout(const Duration(seconds: 6));
       setState(() {

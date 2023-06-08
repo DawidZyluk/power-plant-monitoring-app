@@ -6,14 +6,14 @@ import 'package:mewa/models/data_response.dart';
 class APIService {
   static var client = http.Client();
 
-  // static Future<DataResponse> fetchData() async {
-  //   final response = await http.get(Uri.parse(dotenv.env['DATABASE_URL']!));
-
-  //   return DataResponseFromJson(response.body);
-  // }
-
   static Future<DataResponse> fetchPhase(String phase) async {
     final response = await http.get(Uri.parse("${dotenv.env['DATABASE_URL2']!}/exec?query=SELECT%20*%20FROM%20phase%20LATEST%20BY%20ts%20WHERE%20%20phase%3D'$phase'%20ORDER%20BY%20ts%20DESC%3B&nm=true&limit=10"));
+
+    return DataResponseFromJson(response.body);
+  }
+
+  static Future<DataResponse> fetchPowerActive(String phase) async {
+    final response = await http.get(Uri.parse("${dotenv.env['DATABASE_URL2']!}/exec?query=SELECT%20ts%2C%20power_active%20FROM%20phase%20WHERE%20phase%3D'$phase'%20LIMIT%2020%3B&nm=true&limit=20"));
 
     return DataResponseFromJson(response.body);
   }
