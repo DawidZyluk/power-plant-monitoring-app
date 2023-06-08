@@ -1,6 +1,5 @@
 class WaterReadings {
   const WaterReadings({
-    required this.id,
     required this.timestamp,
     required this.pressureStatus,
     required this.diverterStatus,
@@ -10,7 +9,6 @@ class WaterReadings {
     required this.diverterPosition,
   });
 
-  final int id;
   final String timestamp;
   final bool pressureStatus;
   final bool diverterStatus;

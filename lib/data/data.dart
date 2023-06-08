@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:mewa/models/category.dart';
-import 'package:mewa/models/combined_phases.dart';
 import 'package:mewa/models/phase_readings.dart';
 import 'package:mewa/models/water_readings.dart';
 import 'package:mewa/models/electric_avg.dart';
@@ -25,7 +24,6 @@ const availableCategories = [
   ),
 ];
 
-List<CombinedPhases> combinedPhases = [];
 List<PhaseReadings> phase1 = [];
 List<PhaseReadings> phase2 = [];
 List<PhaseReadings> phase3 = [];
@@ -36,7 +34,6 @@ Future getAllData() async {
   await getPhase('1');
   await getPhase('2');
   await getPhase('3');
-  await getCombinedPhases();
   await getElectricAvg();
   await getWaterReadings();
 }
@@ -46,7 +43,7 @@ Future getPhase(String phase) async {
     phase1 = [];
     var result = await APIService.fetchPhase('1');
     for(final item in result.dataset) {
-      phase1.add(PhaseReadings(id: item[0], timestamp: item[1], phase: item[2], voltage: item[3], current: item[4], powerActive: item[5], powerReactive: item[6], powerApparent: item[7]));
+      phase1.add(PhaseReadings(timestamp: item[0], phase: item[1], voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
   }
   }
 
@@ -54,7 +51,7 @@ Future getPhase(String phase) async {
     phase2 = [];
     var result = await APIService.fetchPhase('2');
     for(final item in result.dataset) {
-      phase2.add(PhaseReadings(id: item[0], timestamp: item[1], phase: item[2], voltage: item[3], current: item[4], powerActive: item[5], powerReactive: item[6], powerApparent: item[7]));
+      phase2.add(PhaseReadings(timestamp: item[0], phase: item[1], voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
     }
   }
 
@@ -62,16 +59,8 @@ Future getPhase(String phase) async {
     phase3 = [];
     var result = await APIService.fetchPhase('3');
     for(final item in result.dataset) {
-      phase3.add(PhaseReadings(id: item[0], timestamp: item[1], phase: item[2], voltage: item[3], current: item[4], powerActive: item[5], powerReactive: item[6], powerApparent: item[7]));
+      phase3.add(PhaseReadings(timestamp: item[0], phase: item[1], voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
     }
-  }
-}
-
-Future getCombinedPhases() async {
-  combinedPhases = [];
-  var result = await APIService.fetchCombinedPhases();
-  for(final item in result.dataset) {
-    combinedPhases.add(CombinedPhases(id: item[0], timestamp: item[1], phase1Id: item[2], phase2Id: item[3], phase3Id: item[4]));
   }
 }
 
@@ -80,7 +69,7 @@ Future getElectricAvg() async {
   electricAvg = [];
   var result = await APIService.fetchElectricAvg();
   for(final item in result.dataset) {
-    electricAvg.add(ElectricAvg(id: item[0], timestamp: item[1], currentDemand: item[2], powerActiveDemand: item[3], powerApparentDemand: item[4]));
+    electricAvg.add(ElectricAvg(timestamp: item[0], currentDemand: item[1], powerActiveDemand: item[2], powerApparentDemand: item[3]));
   }
 }
 
@@ -88,6 +77,6 @@ Future getWaterReadings() async {
   waterReadings = [];
   var result = await APIService.fetchWaterReadings();
   for(final item in result.dataset) {
-    waterReadings.add(WaterReadings(id: item[0], timestamp: item[1], pressureStatus: item[2], diverterStatus: item[3], oilStatus: item[4], waterStatus: item[5], waterLevel: item[6], diverterPosition: item[7]));
+    waterReadings.add(WaterReadings(timestamp: item[0], pressureStatus: item[1], diverterStatus: item[2], oilStatus: item[3], waterStatus: item[4], waterLevel: item[5], diverterPosition: item[6]));
   }
 }

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mewa/data/data.dart';
-import 'package:mewa/models/combined_phases.dart';
 import 'package:mewa/models/phase_readings.dart';
 import 'package:mewa/widgets/combined_phases.dart';
 import 'package:mewa/widgets/phase_reading.dart';
 
 class CombinedPhasesScreen extends StatelessWidget {
   const CombinedPhasesScreen(
-      {super.key, required this.title, required this.readings});
+      {super.key, required this.title});
 
   final String title;
-  final List<CombinedPhases> readings;
 
   void _selectPhase(BuildContext context, PhaseReadings readings) {
     Widget screen = PhaseReading(reading: readings);
@@ -45,13 +43,13 @@ class CombinedPhasesScreen extends StatelessWidget {
       ),
     );
 
-    if (readings.isNotEmpty) {
+    if (phase1.isNotEmpty && phase2.isNotEmpty && phase3.isNotEmpty) {
       content = ListView.builder(
-        itemCount: readings.length,
+        itemCount: phase1.length,
         itemBuilder: (ctx, index) {
           return CombinedPhasesWidget(
               index: index,
-              reading: readings[index],
+              reading: phase1[index],
               onSelectPhase: (int phaseNumber) {
                 PhaseReadings phaseInfo = phase1[index];
                 if(phaseNumber == 1) phaseInfo = phase1[index];

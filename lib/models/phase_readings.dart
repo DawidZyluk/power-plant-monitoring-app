@@ -1,6 +1,5 @@
 class PhaseReadings {
   const PhaseReadings({
-    required this.id,
     required this.timestamp,
     required this.phase,
     required this.voltage,
@@ -10,9 +9,8 @@ class PhaseReadings {
     required this.powerApparent,
   });
 
-  final int id;
   final String timestamp;
-  final int phase;
+  final String phase;
   final double voltage;
   final double current;
   final double powerActive;

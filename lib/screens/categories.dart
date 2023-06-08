@@ -24,7 +24,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   void _selectCategory(BuildContext context, Category category) {
     Widget screen = PhaseReadingsScreen(title: category.title, readings: []);
-    if(category.id == "c1") screen = CombinedPhasesScreen(title: category.title, readings: combinedPhases);
+    if(category.id == "c1") screen = CombinedPhasesScreen(title: category.title);
     if(category.id == "c2") screen = ElectricAvgScreen(title: category.title, readings: electricAvg);
     if(category.id == "c3") screen = WaterReadingsScreen(title: category.title, readings: waterReadings);
 
@@ -38,7 +38,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     Future refresh() async {
       await getAllData().timeout(const Duration(seconds: 6));
       setState(() {
-        timestamp = combinedPhases[0].timestamp;
+        timestamp = phase1[0].timestamp;
         voltage = phase1[0].voltage != 0 && phase2[0].voltage != 0 && phase3[0].voltage != 0 ? true : false;
         diverter = waterReadings[0].diverterStatus;
         powerActiveAvg = (phase1[0].powerActive + phase2[0].powerActive + phase3[0].powerActive) / 3;

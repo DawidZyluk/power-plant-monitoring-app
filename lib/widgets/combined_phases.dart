@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mewa/data/data.dart';
-import 'package:mewa/models/combined_phases.dart';
+import 'package:mewa/models/phase_readings.dart';
 
 class CombinedPhasesWidget extends StatelessWidget {
   const CombinedPhasesWidget(
       {super.key, required this.index, required this.reading, required this.onSelectPhase});
 
   final int index;
-  final CombinedPhases reading;
+  final PhaseReadings reading;
   final void Function(int phaseNumber) onSelectPhase;
 
   @override
