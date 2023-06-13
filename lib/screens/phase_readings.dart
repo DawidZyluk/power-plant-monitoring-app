@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mewa/models/phase_readings.dart';
-import 'package:mewa/widgets/phase_reading.dart';
+import 'package:MEWA/models/phase_readings.dart';
+import 'package:MEWA/widgets/phase_reading.dart';
 
 class PhaseReadingsScreen extends StatelessWidget {
   const PhaseReadingsScreen({super.key, required this.title, required this.readings});

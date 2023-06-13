@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mewa/widgets/display_bool.dart';
+import 'package:MEWA/widgets/display_bool.dart';
 
 class PowerplantInfo extends StatefulWidget {
   final String? timestamp;
@@ -20,8 +20,11 @@ class _PowerplantInfoState extends State<PowerplantInfo> {
     //var date;
     var time;
     if(widget.timestamp!.isNotEmpty){
-      //date = widget.timestamp!.split('T')[0];
-      time = widget.timestamp!.split('T')[1].split('.')[0];
+    final timeReading = DateTime.parse(widget.timestamp!);
+    final ourTimeZone = DateTime(timeReading.year, timeReading.month, timeReading.day, timeReading.hour+2, timeReading.minute).toIso8601String();
+
+    final timestamp = ourTimeZone.split('T');
+    time = timestamp[1].split('.')[0];
     } 
     
     Widget content = SizedBox(height: 50,child: Text("Brak aktualnych danych"),);

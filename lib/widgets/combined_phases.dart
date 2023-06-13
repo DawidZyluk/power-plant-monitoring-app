@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mewa/data/data.dart';
-import 'package:mewa/models/phase_readings.dart';
+import 'package:MEWA/data/data.dart';
+import 'package:MEWA/models/phase_readings.dart';
 
 class CombinedPhasesWidget extends StatelessWidget {
   const CombinedPhasesWidget(
@@ -12,7 +12,11 @@ class CombinedPhasesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final timestamp = reading.timestamp.split('T');
+
+    final timeReading = DateTime.parse(reading.timestamp);
+    final ourTimeZone = DateTime(timeReading.year, timeReading.month, timeReading.day, timeReading.hour+2, timeReading.minute).toIso8601String();
+
+    final timestamp = ourTimeZone.split('T');
     final date = timestamp[0];
     final time = timestamp[1].split('.')[0];
 

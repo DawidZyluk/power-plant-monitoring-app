@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mewa/models/electric_avg.dart';
+import 'package:MEWA/models/electric_avg.dart';
 
 class ElectricAvgWidget extends StatelessWidget {
   const ElectricAvgWidget({super.key, required this.reading});
@@ -9,7 +9,10 @@ class ElectricAvgWidget extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    final timestamp = reading.timestamp.split('T');
+    final timeReading = DateTime.parse(reading.timestamp);
+    final ourTimeZone = DateTime(timeReading.year, timeReading.month, timeReading.day, timeReading.hour+2, timeReading.minute).toIso8601String();
+
+    final timestamp = ourTimeZone.split('T');
     final date = timestamp[0];
     final time = timestamp[1].split('.')[0];
 

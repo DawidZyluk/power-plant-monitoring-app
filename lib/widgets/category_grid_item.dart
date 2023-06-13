@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mewa/models/category.dart';
+import 'package:MEWA/models/category.dart';
 
 class CategoryGridItem extends StatelessWidget {
   const CategoryGridItem(

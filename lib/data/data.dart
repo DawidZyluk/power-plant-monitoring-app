@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:mewa/models/category.dart';
-import 'package:mewa/models/chart_data.dart';
-import 'package:mewa/models/phase_readings.dart';
-import 'package:mewa/models/water_readings.dart';
-import 'package:mewa/models/electric_avg.dart';
-import 'package:mewa/services/api_service.dart';
+import 'package:MEWA/models/category.dart';
+import 'package:MEWA/models/chart_data.dart';
+import 'package:MEWA/models/phase_readings.dart';
+import 'package:MEWA/models/water_readings.dart';
+import 'package:MEWA/models/electric_avg.dart';
+import 'package:MEWA/services/api_service.dart';
 
 const availableCategories = [
   Category(
@@ -90,6 +90,7 @@ Future getElectricAvg() async {
 Future getWaterReadings() async {
   waterReadings = [];
   var result = await APIService.fetchWaterReadings();
+
   for(final item in result.dataset) {
     waterReadings.add(WaterReadings(timestamp: item[0], pressureStatus: item[1], diverterStatus: item[2], oilStatus: item[3], waterStatus: item[4], waterLevel: item[5], diverterPosition: item[6]));
   }

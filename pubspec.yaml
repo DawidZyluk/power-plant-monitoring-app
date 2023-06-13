@@ -1,4 +1,4 @@
-name: mewa
+name: MEWA
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -33,6 +33,7 @@ dependencies:
   http: ^1.0.0
   flutter_dotenv: ^5.1.0
   syncfusion_flutter_charts: ^21.2.9
+  flutter_launcher_icons: ^0.13.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -43,6 +44,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  # android: "launcher_icon"
+  android: true
+  ios: true
+  image_path: "assets/MEWA.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

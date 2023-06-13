@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mewa/data/data.dart';
-import 'package:mewa/models/category.dart';
-import 'package:mewa/screens/combined_phases.dart';
-import 'package:mewa/screens/electric_avg.dart';
-import 'package:mewa/screens/power_active_chart.dart';
-import 'package:mewa/screens/water_readings.dart';
-import 'package:mewa/widgets/category_grid_item.dart';
-import 'package:mewa/screens/phase_readings.dart';
-import 'package:mewa/widgets/powerplant_info.dart';
+import 'package:MEWA/data/data.dart';
+import 'package:MEWA/models/category.dart';
+import 'package:MEWA/screens/combined_phases.dart';
+import 'package:MEWA/screens/electric_avg.dart';
+import 'package:MEWA/screens/power_active_chart.dart';
+import 'package:MEWA/screens/water_readings.dart';
+import 'package:MEWA/widgets/category_grid_item.dart';
+import 'package:MEWA/screens/phase_readings.dart';
+import 'package:MEWA/widgets/powerplant_info.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mewa/models/water_readings.dart';
-import 'package:mewa/widgets/display_bool.dart';
+import 'package:MEWA/models/water_readings.dart';
+import 'package:MEWA/widgets/display_bool.dart';
 
 class WaterReading extends StatelessWidget {
   const WaterReading({super.key, required this.reading});

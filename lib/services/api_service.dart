@@ -1,7 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:mewa/models/data_response.dart';
+import 'package:MEWA/models/data_response.dart';
 
 class APIService {
   static var client = http.Client();

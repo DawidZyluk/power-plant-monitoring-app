@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mewa/models/phase_readings.dart';
+import 'package:MEWA/models/phase_readings.dart';
 
 class PhaseReading extends StatelessWidget {
   const PhaseReading({super.key, required this.reading});
@@ -8,9 +8,15 @@ class PhaseReading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final timeReading = DateTime.parse(reading.timestamp);
+    final ourTimeZone = DateTime(timeReading.year, timeReading.month, timeReading.day, timeReading.hour+2, timeReading.minute).toIso8601String();
+
+    final timestamp = ourTimeZone.split('T');
+    final time = timestamp[1].split('.')[0];
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('${reading.timestamp.split('T')[1].split('.')[0]} '),
+        title: Text(time),
       ),
       body: Container(
         height: 300,

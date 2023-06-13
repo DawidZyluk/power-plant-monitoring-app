@@ -1,4 +1,4 @@
-package com.example.mewa
+package com.example.MEWA
 
 import io.flutter.embedding.android.FlutterActivity
 

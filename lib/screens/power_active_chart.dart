@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mewa/data/data.dart';
-import 'package:mewa/models/chart_data.dart';
+import 'package:MEWA/data/data.dart';
+import 'package:MEWA/models/chart_data.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class PowerActiveChart extends StatefulWidget {

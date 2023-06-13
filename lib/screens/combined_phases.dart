@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mewa/data/data.dart';
-import 'package:mewa/models/phase_readings.dart';
-import 'package:mewa/widgets/combined_phases.dart';
-import 'package:mewa/widgets/phase_reading.dart';
+import 'package:MEWA/data/data.dart';
+import 'package:MEWA/models/phase_readings.dart';
+import 'package:MEWA/widgets/combined_phases.dart';
+import 'package:MEWA/widgets/phase_reading.dart';
 
 class CombinedPhasesScreen extends StatelessWidget {
   const CombinedPhasesScreen(
