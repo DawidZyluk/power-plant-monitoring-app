@@ -14,7 +14,7 @@ class ElectricAvgWidget extends StatelessWidget {
 
     final timestamp = ourTimeZone.split('T');
     final date = timestamp[0];
-    final time = timestamp[1].split('.')[0];
+    final time = timestamp[1].split('.')[0].substring(0,5);
 
     return Padding(
       padding: const EdgeInsets.only(top: 10, left: 5, right: 5),

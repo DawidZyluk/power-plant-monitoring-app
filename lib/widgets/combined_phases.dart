@@ -18,7 +18,7 @@ class CombinedPhasesWidget extends StatelessWidget {
 
     final timestamp = ourTimeZone.split('T');
     final date = timestamp[0];
-    final time = timestamp[1].split('.')[0];
+    final time = timestamp[1].split('.')[0].substring(0, 5);
 
     double voltageAvg = (phase1[index].voltage + phase2[index].voltage + phase3[index].voltage) / 3;
     double currentAvg = (phase1[index].current + phase2[index].current + phase3[index].current) / 3;

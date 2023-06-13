@@ -34,20 +34,29 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       builder: (ctx) => screen));
   }
 
-  @override
-  Widget build(BuildContext context) {
-    Future refresh() async {
+      Future refresh() async {
       await getAllData().timeout(const Duration(seconds: 12));
-      if(phase1.isNotEmpty && waterReadings.isNotEmpty) {
-        setState(() {
+      setState(() {
         timestamp = phase1[0].timestamp;
         voltage = phase1[0].voltage != 0 && phase2[0].voltage != 0 && phase3[0].voltage != 0 ? true : false;
         diverter = waterReadings[0].diverterStatus;
         powerActiveAvg = (phase1[0].powerActive + phase2[0].powerActive + phase3[0].powerActive) / 3;
       });
-      }
     }
-    
+
+    @override
+  void initState() {
+    setState(() {
+        timestamp = phase1[0].timestamp;
+        voltage = phase1[0].voltage != 0 && phase2[0].voltage != 0 && phase3[0].voltage != 0 ? true : false;
+        diverter = waterReadings[0].diverterStatus;
+        powerActiveAvg = (phase1[0].powerActive + phase2[0].powerActive + phase3[0].powerActive) / 3;
+      });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {    
     return Scaffold(
       appBar: AppBar(
         title: const Text("Panel główny"),

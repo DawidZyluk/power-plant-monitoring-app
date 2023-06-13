@@ -92,7 +92,7 @@ Future getWaterReadings() async {
   var result = await APIService.fetchWaterReadings();
 
   for(final item in result.dataset) {
-    waterReadings.add(WaterReadings(timestamp: item[0], pressureStatus: item[1], diverterStatus: item[2], oilStatus: item[3], waterStatus: item[4], waterLevel: item[5], diverterPosition: item[6]));
+    waterReadings.add(WaterReadings(timestamp: item[0], pressureStatus: item[1], diverterStatus: item[2], oilStatus: item[3], waterStatus: item[4], waterLevel: 3, diverterPosition: 2));
   }
 }
 

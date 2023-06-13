@@ -12,7 +12,7 @@ class PhaseReading extends StatelessWidget {
     final ourTimeZone = DateTime(timeReading.year, timeReading.month, timeReading.day, timeReading.hour+2, timeReading.minute).toIso8601String();
 
     final timestamp = ourTimeZone.split('T');
-    final time = timestamp[1].split('.')[0];
+    final time = timestamp[1].split('.')[0].substring(0,5);
 
     return Scaffold(
       appBar: AppBar(

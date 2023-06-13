@@ -42,7 +42,12 @@ Widget build(BuildContext context) {
                   LineSeries<ChartData, String>(
                     dataSource: _chartData,
                     xValueMapper: (ChartData data, _) {
-                      return data.timestamp.split('T')[1].split('.')[0];
+                      final timeReading = DateTime.parse(data.timestamp);
+                      final ourTimeZone = DateTime(timeReading.year, timeReading.month, timeReading.day, timeReading.hour+2, timeReading.minute).toIso8601String();
+
+                      final timestamp = ourTimeZone.split('T');
+                      final time = timestamp[1].split('.')[0].substring(0, 5);
+                      return time;
                     },
                     yValueMapper: (ChartData data, _) => data.value / 1000
                   )

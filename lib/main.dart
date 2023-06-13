@@ -1,3 +1,4 @@
+import 'package:MEWA/data/data.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -20,6 +21,7 @@ final theme = ThemeData(
 
 void main() async {
   await dotenv.load(fileName: ".env");
+  await getAllData(); 
   runApp(const App());
 }
 
