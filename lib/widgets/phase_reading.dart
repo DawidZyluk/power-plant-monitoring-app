@@ -23,22 +23,22 @@ class PhaseReading extends StatelessWidget {
               children: [
                 SizedBox(height: 25,),
                 Text(
-                  'Napięcie: ${reading.voltage.toString()} V',
+                  'Napięcie: ${reading.voltage.toStringAsFixed(2)} V',
                   style: TextStyle(color: Colors.white, fontSize: 22),
                 ),
                 SizedBox(height: 25,),
                 Text(
-                  'Prąd: ${reading.current.toString()} A',
+                  'Prąd: ${reading.current.toStringAsFixed(2)} A',
                   style: TextStyle(color: Colors.white, fontSize: 22),
                 ),
                 SizedBox(height: 25,),
                 Text(
-                  'Moc czynna: ${reading.powerActive.toString()} W',
+                  'Moc czynna: ${(reading.powerActive/1000).toStringAsFixed(2)} kW',
                   style: TextStyle(color: Colors.white, fontSize: 22),
                 ),
                 SizedBox(height: 25,),
                 Text(
-                  'Moc bierna: ${reading.powerReactive.toString()} var',
+                  'Moc bierna: ${(reading.powerReactive/1000).toStringAsFixed(2)} kVar',
                   style: TextStyle(color: Colors.white, fontSize: 22),
                 ),
               ],

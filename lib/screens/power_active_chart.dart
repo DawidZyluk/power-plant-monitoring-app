@@ -29,19 +29,22 @@ Widget build(BuildContext context) {
       child: Container(
         color: Colors.white,
         padding: EdgeInsets.fromLTRB(20, 30, 20, 40),
+        margin: EdgeInsets.fromLTRB(0, 140, 0, 140),
         child: Center(
             child: Container(
               width: 1200,
+              height: 400,
               child: SfCartesianChart(
                 primaryXAxis: CategoryAxis(),
-      
+                primaryYAxis: NumericAxis(minimum: 0, interval: 0.5, title: AxisTitle(text: "kW"), name: "Moc czynna"),
+                tooltipBehavior: TooltipBehavior(enable: true, header: "Moc czynna"),
                 series: <LineSeries<ChartData, String>>[
                   LineSeries<ChartData, String>(
                     dataSource: _chartData,
                     xValueMapper: (ChartData data, _) {
                       return data.timestamp.split('T')[1].split('.')[0];
                     },
-                    yValueMapper: (ChartData data, _) => data.value
+                    yValueMapper: (ChartData data, _) => data.value / 1000
                   )
                 ]
               )

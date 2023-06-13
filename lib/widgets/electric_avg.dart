@@ -23,17 +23,17 @@ class ElectricAvgWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(date, style: TextStyle(color: Colors.white, fontSize: 22),),
                   Text(time, style: TextStyle(color: Colors.white, fontSize: 22),),
+                  Text(date, style: TextStyle(color: Colors.white, fontSize: 22),),
                 ],
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 40,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                Text('${reading.currentDemand.toString()} V', style: TextStyle(color: Colors.white, fontSize: 18),),
-                Text('${reading.powerActiveDemand.toString()} W', style: TextStyle(color: Colors.white, fontSize: 18),),
-                Text('${reading.powerApparentDemand.toString()} VA', style: TextStyle(color: Colors.white, fontSize: 18),),
+                Text('${reading.currentDemand.toStringAsFixed(2)} V', style: TextStyle(color: Colors.white, fontSize: 18),),
+                Text('${(reading.powerActiveDemand / 1000).toStringAsFixed(2)} kW', style: TextStyle(color: Colors.white, fontSize: 18),),
+                Text('${(reading.powerApparentDemand / 1000).toStringAsFixed(2)} kVA', style: TextStyle(color: Colors.white, fontSize: 18),),
               ]),
             ],
           ),

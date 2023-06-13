@@ -63,21 +63,21 @@ class CombinedPhasesWidget extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  "${powerActiveAvg.toStringAsFixed(2)} W",
+                  "${(powerActiveAvg/1000).toStringAsFixed(2)} kW",
                   style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 Text(
-                  "${powerReactiveAvg.toStringAsFixed(2)} var",
+                  "${(powerReactiveAvg/1000).toStringAsFixed(2)} kVar",
                   style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 Text(
-                  "${powerApparentAvg.toStringAsFixed(2)} VA",
+                  "${(powerApparentAvg/1000).toStringAsFixed(2)} kVA",
                   style: TextStyle(fontSize: 18),
                 ),
               ],

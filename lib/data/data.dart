@@ -58,7 +58,7 @@ Future getPhase(String phase) async {
     var result = await APIService.fetchPhase('1');
     for(final item in result.dataset) {
       phase1.add(PhaseReadings(timestamp: item[0], phase: item[1], voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
-  }
+    }
   }
 
   if(phase == '2') {
@@ -101,7 +101,7 @@ Future getPowerActive(String phase) async {
     var result = await APIService.fetchPowerActive('1');
     for(final item in result.dataset) {
       phase1PowerActive.add(ChartData(item[0], item[1]));
-  }
+    }
   }
 
   if(phase == '2') {
