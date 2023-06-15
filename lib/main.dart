@@ -21,7 +21,7 @@ final theme = ThemeData(
 
 void main() async {
   await dotenv.load(fileName: ".env");
-  await getAllData(); 
+  await getAllData(); //.timeout(const Duration(seconds: 3));
   runApp(const App());
 }
 
@@ -31,6 +31,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: theme,
       home: const CategoriesScreen(),
     );

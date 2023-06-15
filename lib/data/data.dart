@@ -126,7 +126,8 @@ List<ChartData> getChartData() {
   chartData = [];
   String timestamp;
   double value;
-  for(var i = 0; i < phase1PowerActive.length; i++) {
+
+  for(var i = phase1PowerActive.length - 1; i >= 0 ; i--) {
     value = (phase1PowerActive[i].value + phase2PowerActive[i].value + phase3PowerActive[i].value) / 3;
     timestamp = phase1PowerActive[i].timestamp;
 
