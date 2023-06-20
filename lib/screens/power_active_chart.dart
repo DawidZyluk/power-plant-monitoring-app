@@ -25,15 +25,15 @@ Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(title: Text("Wykres mocy czynnej"),),
     body: SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
+      //scrollDirection: Axis.horizontal,
       child: Container(
         color: Colors.white,
         padding: EdgeInsets.fromLTRB(20, 30, 20, 40),
         margin: EdgeInsets.fromLTRB(0, 140, 0, 140),
         child: Center(
             child: Container(
-              width: 1200,
-              height: 400,
+              // width: 1200,
+              // height: 400,
               child: SfCartesianChart(
                 primaryXAxis: CategoryAxis(),
                 primaryYAxis: NumericAxis(minimum: 0, interval: 0.5, title: AxisTitle(text: "kW"), name: "Moc czynna"),
