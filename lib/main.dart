@@ -12,16 +12,32 @@ final theme = ThemeData(
   colorScheme: ColorScheme.fromSwatch().copyWith(
     primary: Colors.blue[900],
   ),
-  textTheme: GoogleFonts.latoTextTheme().apply(
-    displayColor: Colors.white,
-    bodyColor: Colors.white
+  textTheme: GoogleFonts.latoTextTheme()
+      .apply(displayColor: Colors.white, bodyColor: Colors.white),
+);
+
+Widget homePage = Scaffold(
+  body: Center(
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(Icons.signal_cellular_connected_no_internet_4_bar_outlined, size: 40, color: Colors.white,),
+        const SizedBox(
+          height: 16,
+        ),
+        Text("Brak połączenia z serwerem", style: TextStyle(fontSize: 20))
+      ],
+    ),
   ),
-  
 );
 
 void main() async {
   await dotenv.load(fileName: ".env");
-  await getAllData(); //.timeout(const Duration(seconds: 3));
+  try {
+    await getAllData().timeout(const Duration(seconds: 6));
+    homePage = const CategoriesScreen();
+  } catch (error) {}
+
   runApp(const App());
 }
 
@@ -33,7 +49,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: theme,
-      home: const CategoriesScreen(),
+      home: homePage,
     );
   }
 }
