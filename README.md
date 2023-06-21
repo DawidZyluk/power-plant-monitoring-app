@@ -7,17 +7,16 @@ This project is a water power plant monitoring application built using Flutter a
 Water power plants are crucial for generating renewable energy from water resources. Efficient monitoring and analysis of power plant operations are essential to ensure optimal performance and identify potential issues. This project aims to develop a mobile application that enables real-time monitoring and data analysis for water power plants. By utilizing Flutter for the user interface and QuestDB for data storage and retrieval, the application provides a reliable and efficient solution for plant operators and engineers.
 
 ## Features
-Real-time monitoring of water levels, power output, and environmental conditions.
-Historical data analysis and visualization with customizable time ranges and data filters.
-Alerts and notifications for critical events or abnormal conditions.
-User authentication and access control for secure data access.
-Intuitive user interface for easy navigation and interaction.
-Technologies
+- Real-time monitoring of water levels, power output, and environmental conditions.
+- Historical data analysis and visualization with customizable time ranges and data filters.
+- Alerts and notifications for critical events or abnormal conditions.
+- Intuitive user interface for easy navigation and interaction.
+## Technologies
 The key technologies used in this project are:
 
-Flutter: A cross-platform framework for building mobile applications.
+**Flutter**: A cross-platform framework for building mobile applications.
 
-QuestDB: A high-performance time-series database for efficient data storage and retrieval.
+**QuestDB**: A high-performance time-series database for efficient data storage and retrieval.
 
 ## Project structure
 ```bash
