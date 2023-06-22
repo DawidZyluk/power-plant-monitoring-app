@@ -33,11 +33,7 @@ Widget homePage = Scaffold(
 
 void main() async {
   await dotenv.load(fileName: ".env");
-  try {
-    await getAllData().timeout(const Duration(seconds: 6));
-    homePage = const CategoriesScreen();
-  } catch (error) {}
-
+  await getAllData(); //.timeout(const Duration(seconds: 3));
   runApp(const App());
 }
 
