@@ -37,7 +37,6 @@ void main() async {
     await getAllData().timeout(const Duration(seconds: 6));
     homePage = const CategoriesScreen();
   } catch (error) {
-    print(error);
   }  
   runApp(const App());
 }

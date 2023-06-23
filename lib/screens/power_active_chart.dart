@@ -13,18 +13,20 @@ class PowerActiveChart extends StatefulWidget {
 class _PowerActiveChartState extends State<PowerActiveChart> {
   List<ChartData> _chartData = [];
   late ZoomPanBehavior _zoomPanBehavior;
+  String _current = '1d';
 
   @override
   void initState() {
-    _chartData = getChartData();
+    _chartData = avgPowerActive;
     _zoomPanBehavior =
         ZoomPanBehavior(enablePinching: true, enablePanning: true);
-
+  
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    getAvgPowerActive(30, 1);
     final List<Color> color = <Color>[];
     color.add(Color.fromARGB(131, 227, 242, 253));
     color.add(Color.fromARGB(144, 144, 202, 249));
@@ -41,59 +43,94 @@ class _PowerActiveChartState extends State<PowerActiveChart> {
         transform: GradientRotation((270 * (3.14 / 180))));
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Wykres mocy czynnej"),
-      ),
-      body: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            //borderRadius: BorderRadius.circular(12)
-          ),
-          height: 500,
-          padding: EdgeInsets.fromLTRB(0, 20, 20, 20),
-          // margin: EdgeInsets.fromLTRB(10, 100, 10, 120),
-          child: SfCartesianChart(
-              primaryXAxis: CategoryAxis(
-                labelStyle: TextStyle(color: Colors.grey[600]),
-                majorGridLines: MajorGridLines(width: 0),
-              ),
-              primaryYAxis: NumericAxis(
-                  labelStyle: TextStyle(color: Colors.grey[600]),
-                  rangePadding: ChartRangePadding.additional,
-                  //labelFormat: '{value} kW',
-                  //minimum: 0,
-                  //interval: 1,
-                  title: AxisTitle(
-                      text: "kW",
-                      textStyle: TextStyle(color: Colors.grey[600])),
-                  name: "Moc czynna"),
-              tooltipBehavior:
-                  TooltipBehavior(enable: true, header: "Moc czynna"),
-              zoomPanBehavior: _zoomPanBehavior,
-              series: <LineSeries<ChartData, String>>[
-                LineSeries<ChartData, String>(
-                  //borderColor: Colors.blue[600],
-                  //borderWidth: 1,
-                  //color: Colors.blue[600],
-                  dataSource: _chartData,
-                  //gradient: gradientColors,
-                  xValueMapper: (ChartData data, _) {
-                    final timeReading = DateTime.parse(data.timestamp);
-                    final ourTimeZone = DateTime(
-                            timeReading.year,
-                            timeReading.month,
-                            timeReading.day,
-                            timeReading.hour + 2,
-                            timeReading.minute)
-                        .toIso8601String();
+        appBar: AppBar(
+          title: Text("Wykres mocy czynnej"),
+        ),
+        body: Column(
+          children: [
+            Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  //borderRadius: BorderRadius.circular(12)
+                ),
+                height: 500,
+                padding: EdgeInsets.fromLTRB(0, 20, 20, 20),
+                // margin: EdgeInsets.fromLTRB(10, 100, 10, 120),
+                child: SfCartesianChart(
+                    primaryXAxis: CategoryAxis(
+                      labelStyle: TextStyle(color: Colors.grey[600]),
+                      majorGridLines: MajorGridLines(width: 0),
+                    ),
+                    primaryYAxis: NumericAxis(
+                        labelStyle: TextStyle(color: Colors.grey[600]),
+                        rangePadding: ChartRangePadding.additional,
+                        //labelFormat: '{value} kW',
+                        //minimum: 0,
+                        //interval: 1,
+                        title: AxisTitle(
+                            text: "kW",
+                            textStyle: TextStyle(color: Colors.grey[600])),
+                        name: "Moc czynna"),
+                    tooltipBehavior:
+                        TooltipBehavior(enable: true, header: "Moc czynna"),
+                    zoomPanBehavior: _zoomPanBehavior,
+                    series: <SplineAreaSeries<ChartData, String>>[
+                      SplineAreaSeries<ChartData, String>(
+                        borderColor: Colors.blue[600],
+                        borderWidth: 1,
+                        //color: Colors.blue[600],
+                        dataSource: _chartData,
+                        gradient: gradientColors,
+                        xValueMapper: (ChartData data, _) {
+                          final timeReading = DateTime.parse(data.timestamp);
+                          final ourTimeZone = DateTime(
+                                  timeReading.year,
+                                  timeReading.month,
+                                  timeReading.day,
+                                  timeReading.hour + 2,
+                                  timeReading.minute)
+                              .toIso8601String();
 
-                    final timestamp = ourTimeZone.split('T');
-                    final time = timestamp[1].split('.')[0].substring(0, 5);
-                    return time;
-                  },
-                  yValueMapper: (ChartData data, _) => data.value / 1000,
-                )
-              ])),
-    );
+                          final timestamp = ourTimeZone.split('T');
+                          final time =
+                              timestamp[1].split('.')[0].substring(0, 5);
+                          return '${timestamp[0].substring(5)} \n$time';
+                        },
+                        yValueMapper: (ChartData data, _) => data.value / 1000,
+                      )
+                    ])),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                    onPressed: () async {
+                      await getAvgPowerActive(30, 1);
+                      setState(() {
+                        _current = '1d';
+                        _chartData = avgPowerActive;
+                      });
+                    },
+                    style: TextButton.styleFrom(
+                        backgroundColor: _current == '1d'
+                            ? Colors.green[500]
+                            : Colors.grey[300]),
+                    child: Text("1d")),
+                TextButton(
+                    onPressed: () async {
+                      await getAvgPowerActive(60, 7);
+                      setState(() {
+                        _current = '7d';
+                        _chartData = avgPowerActive;
+                      });
+                    },
+                    style: TextButton.styleFrom(
+                        backgroundColor: _current == '7d'
+                            ? Colors.green[500]
+                            : Colors.grey[300]),
+                    child: Text("7d"))
+              ],
+            )
+          ],
+        ));
   }
 }
