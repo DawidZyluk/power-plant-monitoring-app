@@ -13,7 +13,7 @@ class PowerActiveChart extends StatefulWidget {
 class _PowerActiveChartState extends State<PowerActiveChart> {
   List<ChartData> _chartData = [];
   late ZoomPanBehavior _zoomPanBehavior;
-  String _current = '1d';
+  String _current = '24h';
 
   @override
   void initState() {
@@ -94,7 +94,7 @@ class _PowerActiveChartState extends State<PowerActiveChart> {
                           final timestamp = ourTimeZone.split('T');
                           final time =
                               timestamp[1].split('.')[0].substring(0, 5);
-                          return _current == '1d'
+                          return _current == '24h'
                               ? '$time'
                               : '${timestamp[0]} \n$time';
                         },
@@ -103,28 +103,38 @@ class _PowerActiveChartState extends State<PowerActiveChart> {
                     ])),
             Container(
               //padding: EdgeInsets.all(12),
-              margin: EdgeInsets.only(top: 20),
+              margin: EdgeInsets.only(top: 30),
               decoration: BoxDecoration(boxShadow: []),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextButton(
+                  OutlinedButton(
                       onPressed: () async {
                         await getAvgPowerActive(1);
                         setState(() {
-                          _current = '1d';
+                          _current = '24h';
                           _chartData = avgPowerActive;
                         });
                       },
-                      style: TextButton.styleFrom(
-                          backgroundColor: _current == '1d'
-                              ? Colors.green[500]
-                              : Colors.grey[300]),
-                      child: Text("24h")),
+                      style: OutlinedButton.styleFrom(
+                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6)),
+                          side: BorderSide(width: 2, color: Colors.grey[300]!),
+                          backgroundColor: _current == '24h'
+                              ? Colors.grey[300]
+                              : Colors.transparent),
+                      child: Text(
+                        "24h",
+                        style: TextStyle(
+                          fontSize: 18,
+                            color:
+                                _current == '24h' ? const Color.fromARGB(255, 41, 41, 41) : Colors.grey[300]),
+                      )),
                   SizedBox(
                     width: 10,
                   ),
-                  TextButton(
+                  OutlinedButton(
                       onPressed: () async {
                         await getAvgPowerActive(7);
                         setState(() {
@@ -132,15 +142,25 @@ class _PowerActiveChartState extends State<PowerActiveChart> {
                           _chartData = avgPowerActive;
                         });
                       },
-                      style: TextButton.styleFrom(
+                      style: OutlinedButton.styleFrom(
+                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6)),
+                          side: BorderSide(width: 2, color: Colors.grey[300]!),
                           backgroundColor: _current == '7d'
-                              ? Colors.green[500]
-                              : Colors.grey[300]),
-                      child: Text("7d")),
+                              ? Colors.grey[300]
+                              : Colors.transparent),
+                      child: Text(
+                        "7 dni",
+                        style: TextStyle(
+                          fontSize: 18,
+                            color:
+                                _current == '7d' ? const Color.fromARGB(255, 41, 41, 41) : Colors.grey[300]),
+                      )),
                   SizedBox(
                     width: 10,
                   ),
-                  TextButton(
+                  OutlinedButton(
                       onPressed: () async {
                         await getAvgPowerActive(30);
                         setState(() {
@@ -148,11 +168,21 @@ class _PowerActiveChartState extends State<PowerActiveChart> {
                           _chartData = avgPowerActive;
                         });
                       },
-                      style: TextButton.styleFrom(
+                      style: OutlinedButton.styleFrom(
+                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6)),
+                          side: BorderSide(width: 2, color: Colors.grey[300]!),
                           backgroundColor: _current == '30d'
-                              ? Colors.green[500]
-                              : Colors.grey[300]),
-                      child: Text("30d"))
+                              ? Colors.grey[300]
+                              : Colors.transparent),
+                      child: Text(
+                        "30 dni",
+                        style: TextStyle(
+                          fontSize: 18,
+                            color:
+                                _current == '30d' ? const Color.fromARGB(255, 41, 41, 41) : Colors.grey[300]),
+                      )),
                 ],
               ),
             )
