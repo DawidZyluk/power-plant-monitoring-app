@@ -20,13 +20,13 @@ class _PowerActiveChartState extends State<PowerActiveChart> {
     _chartData = avgPowerActive;
     _zoomPanBehavior =
         ZoomPanBehavior(enablePinching: true, enablePanning: true);
-  
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    getAvgPowerActive(30, 1);
+    getAvgPowerActive(1);
     final List<Color> color = <Color>[];
     color.add(Color.fromARGB(131, 227, 242, 253));
     color.add(Color.fromARGB(144, 144, 202, 249));
@@ -94,41 +94,67 @@ class _PowerActiveChartState extends State<PowerActiveChart> {
                           final timestamp = ourTimeZone.split('T');
                           final time =
                               timestamp[1].split('.')[0].substring(0, 5);
-                          return '${timestamp[0].substring(5)} \n$time';
+                          return _current == '1d'
+                              ? '$time'
+                              : '${timestamp[0]} \n$time';
                         },
                         yValueMapper: (ChartData data, _) => data.value / 1000,
                       )
                     ])),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                    onPressed: () async {
-                      await getAvgPowerActive(30, 1);
-                      setState(() {
-                        _current = '1d';
-                        _chartData = avgPowerActive;
-                      });
-                    },
-                    style: TextButton.styleFrom(
-                        backgroundColor: _current == '1d'
-                            ? Colors.green[500]
-                            : Colors.grey[300]),
-                    child: Text("1d")),
-                TextButton(
-                    onPressed: () async {
-                      await getAvgPowerActive(60, 7);
-                      setState(() {
-                        _current = '7d';
-                        _chartData = avgPowerActive;
-                      });
-                    },
-                    style: TextButton.styleFrom(
-                        backgroundColor: _current == '7d'
-                            ? Colors.green[500]
-                            : Colors.grey[300]),
-                    child: Text("7d"))
-              ],
+            Container(
+              //padding: EdgeInsets.all(12),
+              margin: EdgeInsets.only(top: 20),
+              decoration: BoxDecoration(boxShadow: []),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                      onPressed: () async {
+                        await getAvgPowerActive(1);
+                        setState(() {
+                          _current = '1d';
+                          _chartData = avgPowerActive;
+                        });
+                      },
+                      style: TextButton.styleFrom(
+                          backgroundColor: _current == '1d'
+                              ? Colors.green[500]
+                              : Colors.grey[300]),
+                      child: Text("24h")),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  TextButton(
+                      onPressed: () async {
+                        await getAvgPowerActive(7);
+                        setState(() {
+                          _current = '7d';
+                          _chartData = avgPowerActive;
+                        });
+                      },
+                      style: TextButton.styleFrom(
+                          backgroundColor: _current == '7d'
+                              ? Colors.green[500]
+                              : Colors.grey[300]),
+                      child: Text("7d")),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  TextButton(
+                      onPressed: () async {
+                        await getAvgPowerActive(30);
+                        setState(() {
+                          _current = '30d';
+                          _chartData = avgPowerActive;
+                        });
+                      },
+                      style: TextButton.styleFrom(
+                          backgroundColor: _current == '30d'
+                              ? Colors.green[500]
+                              : Colors.grey[300]),
+                      child: Text("30d"))
+                ],
+              ),
             )
           ],
         ));

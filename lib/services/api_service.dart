@@ -24,9 +24,9 @@ class APIService {
     return DataResponseFromJson(response.body);
   }
 
-  static Future<DataResponse> fetchPowerActive(double sampleByMinutes, double timeRangeDays) async {
-
-    double limit = (timeRangeDays * 24 * 60) / sampleByMinutes;
+  static Future<DataResponse> fetchPowerActive(double timeRangeDays) async {
+    int limit = 60;
+    double sampleByMinutes = (timeRangeDays * 24 * 60) / limit;
     final response = await http.get(Uri.parse("${dotenv.env['DATABASE_URL2']!}/exec?query=SELECT%20ts%2C%20avg(power_active)%20FROM%0A(SELECT%20ts%2C%20power_active%20FROM%20phase)%20timestamp(ts)%0ASAMPLE%20BY%20${sampleByMinutes.toInt()}m%20ORDER%20BY%20ts%20DESC%20LIMIT%20${limit.toInt()}%3B&nm=true"));
 
     return DataResponseFromJson(response.body);

@@ -44,7 +44,7 @@ Future getAllData() async {
   await getPhase('3');
   await getElectricAvg();
   await getWaterReadings();
-  await getAvgPowerActive(30, 1);
+  await getAvgPowerActive(1);
 }
 
 Future getPhase(String phase) async {
@@ -91,25 +91,11 @@ Future getWaterReadings() async {
   }
 }
 
-Future getAvgPowerActive(double sampleByMinutes, double timeRangeDays) async {
+Future getAvgPowerActive(double timeRangeDays) async {
   avgPowerActive = [];
-    var result = await APIService.fetchPowerActive(sampleByMinutes, timeRangeDays);
-    for(final item in result.dataset) {
-      avgPowerActive.add(ChartData(item[0], item[1]));
+    var result = await APIService.fetchPowerActive(timeRangeDays);
+    for(int i = result.dataset.length - 1; i >= 0; i--) {
+      avgPowerActive.add(ChartData(result.dataset[i][0], result.dataset[i][1]));
     }
 }
 
-// List<ChartData> getChartData() {
-//   chartData = [];
-//   String timestamp;
-//   double value;
-
-//   for(var i = avgPowerActive.length - 1; i >= 0 ; i--) {
-//     value = avgPowerActive[i].value;
-//     timestamp = avgPowerActive[i].timestamp;
-
-//     chartData.add(ChartData(timestamp, value));
-//   }
-
-//   return chartData;
-// }
