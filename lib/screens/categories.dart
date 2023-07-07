@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:MEWA/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:MEWA/data/data.dart';
 import 'package:MEWA/models/category.dart';
@@ -89,7 +92,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             ),
             TextButton(
               onPressed: () async {
-
+                NotificationService().showNotification(id: new Random().nextInt(1000000), title: 'Sample title', body: 'It works!');
               },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.blue,

@@ -1,6 +1,7 @@
 import 'package:MEWA/data/data.dart';
+import 'package:MEWA/services/notification_service.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:MEWA/screens/categories.dart';
@@ -47,6 +48,12 @@ void callApi() {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationService().initNotification();
+  
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+  AndroidFlutterLocalNotificationsPlugin>()?.requestPermission();
 
   await dotenv.load(fileName: ".env");
   try {
