@@ -21,7 +21,11 @@ Widget homePage = Scaffold(
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(Icons.signal_cellular_connected_no_internet_4_bar_outlined, size: 40, color: Colors.white,),
+        Icon(
+          Icons.signal_cellular_connected_no_internet_4_bar_outlined,
+          size: 40,
+          color: Colors.white,
+        ),
         const SizedBox(
           height: 16,
         ),
@@ -31,14 +35,26 @@ Widget homePage = Scaffold(
   ),
 );
 
+void callApi() {
+  Future.delayed(const Duration(minutes: 3), () async {
+    try {
+      await getAllData().timeout(const Duration(seconds: 6));
+      homePage = const CategoriesScreen();
+    } catch (error) {}
+    callApi();
+  });
+}
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await dotenv.load(fileName: ".env");
-   try {
+  try {
     await getAllData().timeout(const Duration(seconds: 6));
     homePage = const CategoriesScreen();
-  } catch (error) {
-  }  
+  } catch (error) {}
   runApp(const App());
+  callApi();
 }
 
 class App extends StatelessWidget {

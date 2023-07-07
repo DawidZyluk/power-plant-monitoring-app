@@ -17,7 +17,6 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
-
   String timestamp = "";
   bool voltage = false;
   bool diverter = false;
@@ -25,38 +24,55 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   void _selectCategory(BuildContext context, Category category) {
     Widget screen = PhaseReadingsScreen(title: category.title, readings: []);
-    if(category.id == "c1") screen = CombinedPhasesScreen(title: category.title);
-    if(category.id == "c2") screen = ElectricAvgScreen(title: category.title, readings: electricAvg);
-    if(category.id == "c3") screen = WaterReadingsScreen(title: category.title, readings: waterReadings);
-    if(category.id == "c4") screen = PowerActiveChart();
+    if (category.id == "c1")
+      screen = CombinedPhasesScreen(title: category.title);
+    if (category.id == "c2")
+      screen = ElectricAvgScreen(title: category.title, readings: electricAvg);
+    if (category.id == "c3")
+      screen =
+          WaterReadingsScreen(title: category.title, readings: waterReadings);
+    if (category.id == "c4") screen = PowerActiveChart();
 
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (ctx) => screen));
+    Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => screen));
   }
 
-      Future refresh() async {
-      await getAllData().timeout(const Duration(seconds: 12));
-      setState(() {
-        timestamp = phase1[0].timestamp;
-        voltage = phase1[0].voltage != 0 && phase2[0].voltage != 0 && phase3[0].voltage != 0 ? true : false;
-        diverter = waterReadings[0].diverterStatus;
-        powerActiveAvg = (phase1[0].powerActive + phase2[0].powerActive + phase3[0].powerActive) / 3;
-      });
-    }
+  Future refresh() async {
+    await getAllData().timeout(const Duration(seconds: 12));
+    setState(() {
+      timestamp = phase1[0].timestamp;
+      voltage = phase1[0].voltage != 0 &&
+              phase2[0].voltage != 0 &&
+              phase3[0].voltage != 0
+          ? true
+          : false;
+      diverter = waterReadings[0].diverterStatus;
+      powerActiveAvg = (phase1[0].powerActive +
+              phase2[0].powerActive +
+              phase3[0].powerActive) /
+          3;
+    });
+  }
 
-    @override
+  @override
   void initState() {
     setState(() {
-        timestamp = phase1[0].timestamp;
-        voltage = phase1[0].voltage != 0 && phase2[0].voltage != 0 && phase3[0].voltage != 0 ? true : false;
-        diverter = waterReadings[0].diverterStatus;
-        powerActiveAvg = (phase1[0].powerActive + phase2[0].powerActive + phase3[0].powerActive) / 3;
-      });
+      timestamp = phase1[0].timestamp;
+      voltage = phase1[0].voltage != 0 &&
+              phase2[0].voltage != 0 &&
+              phase3[0].voltage != 0
+          ? true
+          : false;
+      diverter = waterReadings[0].diverterStatus;
+      powerActiveAvg = (phase1[0].powerActive +
+              phase2[0].powerActive +
+              phase3[0].powerActive) /
+          3;
+    });
     super.initState();
   }
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Panel główny"),
@@ -65,7 +81,24 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         onRefresh: refresh,
         child: ListView(
           children: [
-            PowerplantInfo(timestamp: timestamp, voltage: voltage, diverter: diverter,powerActiveAvg: powerActiveAvg,),
+            PowerplantInfo(
+              timestamp: timestamp,
+              voltage: voltage,
+              diverter: diverter,
+              powerActiveAvg: powerActiveAvg,
+            ),
+            TextButton(
+              onPressed: () async {
+
+              },
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.blue,
+              ),
+              child: Text(
+                "Send notification",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
             for (final category in availableCategories)
               CategoryGridItem(
                 category: category,
