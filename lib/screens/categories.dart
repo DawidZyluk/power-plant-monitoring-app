@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'dart:async';
 import 'package:MEWA/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:MEWA/data/data.dart';
@@ -24,6 +24,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   bool voltage = false;
   bool diverter = false;
   double powerActiveAvg = 0;
+  Timer? timer;
 
   void _selectCategory(BuildContext context, Category category) {
     Widget screen = PhaseReadingsScreen(title: category.title, readings: []);
@@ -40,6 +41,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   }
 
   Future refresh() async {
+    print("refresh");
     await getAllData().timeout(const Duration(seconds: 12));
     setState(() {
       timestamp = phase1[0].timestamp;
@@ -58,6 +60,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   @override
   void initState() {
+    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => refresh());
+
     setState(() {
       timestamp = phase1[0].timestamp;
       voltage = phase1[0].voltage != 0 &&
@@ -76,6 +80,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Panel główny"),
@@ -92,7 +97,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             ),
             TextButton(
               onPressed: () async {
-                NotificationService().showNotification(id: new Random().nextInt(1000000), title: 'Sample title', body: 'It works!');
+                NotificationService().showNotification(id: new Random().nextInt(1000000), title: 'Sample title', body: 'Some important information!');
               },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.blue,

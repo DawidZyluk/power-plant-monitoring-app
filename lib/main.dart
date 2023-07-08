@@ -36,16 +36,6 @@ Widget homePage = Scaffold(
   ),
 );
 
-void callApi() {
-  Future.delayed(const Duration(minutes: 3), () async {
-    try {
-      await getAllData().timeout(const Duration(seconds: 6));
-      homePage = const CategoriesScreen();
-    } catch (error) {}
-    callApi();
-  });
-}
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationService().initNotification();
@@ -61,7 +51,6 @@ void main() async {
     homePage = const CategoriesScreen();
   } catch (error) {}
   runApp(const App());
-  callApi();
 }
 
 class App extends StatelessWidget {
