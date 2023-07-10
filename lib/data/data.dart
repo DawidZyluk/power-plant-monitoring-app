@@ -1,5 +1,6 @@
+import 'package:MEWA/models/combined_phases.dart';
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
 import 'package:MEWA/models/category.dart';
 import 'package:MEWA/models/chart_data.dart';
 import 'package:MEWA/models/phase_readings.dart';
@@ -34,6 +35,7 @@ const availableCategories = [
 List<PhaseReadings> phase1 = [];
 List<PhaseReadings> phase2 = [];
 List<PhaseReadings> phase3 = [];
+List<CombinedPhase> combinedPhases = [];
 List<ChartData> avgPowerActive = [];
 List<ElectricAvg> electricAvg= [];
 List<WaterReadings> waterReadings = [];
@@ -45,6 +47,19 @@ Future getAllData() async {
   await getElectricAvg();
   await getWaterReadings();
   await getAvgPowerActive(1);
+  getCombinedPhases();
+}
+
+String formatTimestamp(String timestamp) {
+  final DateTimeTimestamp = DateTime.parse(timestamp);
+  final ourTimeZone = DateTime(
+          DateTimeTimestamp.year,
+          DateTimeTimestamp.month,
+          DateTimeTimestamp.day,
+          DateTimeTimestamp.hour + 2,
+          DateTimeTimestamp.minute);
+    final format = new DateFormat('dd.MM.yyyy HH:mm');
+    return format.format(ourTimeZone);
 }
 
 Future getPhase(String phase) async {
@@ -95,7 +110,20 @@ Future getAvgPowerActive(double timeRangeDays) async {
   avgPowerActive = [];
     var result = await APIService.fetchPowerActive(timeRangeDays);
     for(int i = result.dataset.length - 1; i >= 0; i--) {
-      avgPowerActive.add(ChartData(result.dataset[i][0], result.dataset[i][1]));
+      avgPowerActive.add(ChartData(formatTimestamp(result.dataset[i][0]), result.dataset[i][1]));
     }
+}
+
+void getCombinedPhases() {
+  combinedPhases = [];
+  for(int index = 0; index < phase1.length; index++) {
+    String timestamp = formatTimestamp(phase1[index].timestamp);
+    String voltageAvg = ((phase1[index].voltage + phase2[index].voltage + phase3[index].voltage) / 3).toStringAsFixed(2);
+    String currentAvg = ((phase1[index].current + phase2[index].current + phase3[index].current) / 3).toStringAsFixed(2);
+    String powerActiveAvg = ((phase1[index].powerActive + phase2[index].powerActive + phase3[index].powerActive) / 3).toStringAsFixed(2);
+    String powerReactiveAvg = ((phase1[index].powerReactive + phase2[index].powerReactive + phase3[index].powerReactive) / 3).toStringAsFixed(2);
+    String powerApparentAvg = ((phase1[index].powerApparent + phase2[index].powerApparent + phase3[index].powerApparent) / 3).toStringAsFixed(2);
+    combinedPhases.add(CombinedPhase(timestamp: timestamp, voltageAvg: double.parse(voltageAvg), currentAvg: double.parse(currentAvg), powerActiveAvg: double.parse(powerActiveAvg), powerReactiveAvg: double.parse(powerReactiveAvg), powerApparentAvg: double.parse(powerApparentAvg)));
+  }
 }
 

@@ -82,21 +82,11 @@ class _PowerActiveChartState extends State<PowerActiveChart> {
                         dataSource: _chartData,
                         gradient: gradientColors,
                         xValueMapper: (ChartData data, _) {
-                          final timeReading = DateTime.parse(data.timestamp);
-                          final ourTimeZone = DateTime(
-                                  timeReading.year,
-                                  timeReading.month,
-                                  timeReading.day,
-                                  timeReading.hour + 2,
-                                  timeReading.minute)
-                              .toIso8601String();
-
-                          final timestamp = ourTimeZone.split('T');
-                          final time =
-                              timestamp[1].split('.')[0].substring(0, 5);
+                          var time = data.timestamp.split(' ')[1];
+                          var date = data.timestamp.split(' ')[0];
                           return _current == '24h'
                               ? '$time'
-                              : '${timestamp[0]} \n$time';
+                              : '$date \n$time';
                         },
                         yValueMapper: (ChartData data, _) => data.value / 1000,
                       )
