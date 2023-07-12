@@ -1,4 +1,3 @@
-import 'package:MEWA/models/combined_phases.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:MEWA/models/category.dart';
@@ -35,7 +34,7 @@ const availableCategories = [
 List<PhaseReadings> phase1 = [];
 List<PhaseReadings> phase2 = [];
 List<PhaseReadings> phase3 = [];
-List<CombinedPhase> combinedPhases = [];
+List<PhaseReadings> combinedPhasesAvg = [];
 List<ChartData> avgPowerActive = [];
 List<ElectricAvg> electricAvg= [];
 List<WaterReadings> waterReadings = [];
@@ -67,7 +66,7 @@ Future getPhase(String phase) async {
     phase1 = [];
     var result = await APIService.fetchPhase('1');
     for(final item in result.dataset) {
-      phase1.add(PhaseReadings(timestamp: item[0], phase: item[1], voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
+      phase1.add(PhaseReadings(timestamp: formatTimestamp(item[0]), voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
     }
   }
 
@@ -75,7 +74,7 @@ Future getPhase(String phase) async {
     phase2 = [];
     var result = await APIService.fetchPhase('2');
     for(final item in result.dataset) {
-      phase2.add(PhaseReadings(timestamp: item[0], phase: item[1], voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
+      phase2.add(PhaseReadings(timestamp: formatTimestamp(item[0]), voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
     }
   }
 
@@ -83,7 +82,7 @@ Future getPhase(String phase) async {
     phase3 = [];
     var result = await APIService.fetchPhase('3');
     for(final item in result.dataset) {
-      phase3.add(PhaseReadings(timestamp: item[0], phase: item[1], voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
+      phase3.add(PhaseReadings(timestamp: formatTimestamp(item[0]), voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
     }
   }
 }
@@ -115,15 +114,15 @@ Future getAvgPowerActive(double timeRangeDays) async {
 }
 
 void getCombinedPhases() {
-  combinedPhases = [];
+  combinedPhasesAvg = [];
   for(int index = 0; index < phase1.length; index++) {
-    String timestamp = formatTimestamp(phase1[index].timestamp);
+    String timestamp = phase1[index].timestamp;
     String voltageAvg = ((phase1[index].voltage + phase2[index].voltage + phase3[index].voltage) / 3).toStringAsFixed(2);
     String currentAvg = ((phase1[index].current + phase2[index].current + phase3[index].current) / 3).toStringAsFixed(2);
     String powerActiveAvg = ((phase1[index].powerActive + phase2[index].powerActive + phase3[index].powerActive) / 3).toStringAsFixed(2);
     String powerReactiveAvg = ((phase1[index].powerReactive + phase2[index].powerReactive + phase3[index].powerReactive) / 3).toStringAsFixed(2);
     String powerApparentAvg = ((phase1[index].powerApparent + phase2[index].powerApparent + phase3[index].powerApparent) / 3).toStringAsFixed(2);
-    combinedPhases.add(CombinedPhase(timestamp: timestamp, voltageAvg: double.parse(voltageAvg), currentAvg: double.parse(currentAvg), powerActiveAvg: double.parse(powerActiveAvg), powerReactiveAvg: double.parse(powerReactiveAvg), powerApparentAvg: double.parse(powerApparentAvg)));
+    combinedPhasesAvg.add(PhaseReadings(timestamp: timestamp, voltage: double.parse(voltageAvg), current: double.parse(currentAvg), powerActive: double.parse(powerActiveAvg), powerReactive: double.parse(powerReactiveAvg), powerApparent: double.parse(powerApparentAvg)));
   }
 }
 

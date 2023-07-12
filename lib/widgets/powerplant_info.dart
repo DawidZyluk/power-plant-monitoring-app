@@ -16,17 +16,6 @@ class PowerplantInfo extends StatefulWidget {
 class _PowerplantInfoState extends State<PowerplantInfo> {
   @override
   Widget build(BuildContext context) {
-
-    
-    //var date;
-    var time;
-    if(widget.timestamp!.isNotEmpty){
-      final timeReading = DateTime.parse(widget.timestamp!);
-      final ourTimeZone = DateTime(timeReading.year, timeReading.month, timeReading.day, timeReading.hour+2, timeReading.minute).toIso8601String();
-
-      final timestamp = ourTimeZone.split('T');
-      time = timestamp[1].split('.')[0].substring(0,5);
-    } 
     
     Widget content = SizedBox(height: 50,child: Text("Brak aktualnych danych"),);
 
@@ -74,7 +63,7 @@ class _PowerplantInfoState extends State<PowerplantInfo> {
               ),
               SizedBox(height: 5,),
               Text(
-                '${time ?? ""}',
+                '${widget.timestamp?.split(' ')[1] ?? ""}',
                 style: TextStyle(fontSize: 16,),
               ),
                 ],
