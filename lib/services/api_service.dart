@@ -6,8 +6,8 @@ import 'package:MEWA/models/data_response.dart';
 class APIService {
   static var client = http.Client();
 
-  static Future<DataResponse> fetchPhase(String phase) async {
-    final response = await http.get(Uri.parse("${dotenv.env['DATABASE_URL2']!}/exec?query=SELECT%20*%20FROM%20phase%20LATEST%20BY%20ts%20WHERE%20%20phase~'$phase'%20ORDER%20BY%20ts%20DESC%3B&nm=true&limit=10"));
+  static Future<DataResponse> fetchPhase(int phase, int pages) async {
+    final response = await http.get(Uri.parse("${dotenv.env['DATABASE_URL2']!}/exec?query=SELECT%20*%20FROM%20phase%20LATEST%20BY%20ts%20WHERE%20%20phase~'$phase'%20ORDER%20BY%20ts%20DESC%3B&nm=true&limit=${pages * 10}"));
 
     return DataResponseFromJson(response.body);
   }

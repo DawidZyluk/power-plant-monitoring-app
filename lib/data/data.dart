@@ -31,6 +31,8 @@ const availableCategories = [
   
 ];
 
+int pagesLoaded = 1;
+
 List<PhaseReadings> phase1 = [];
 List<PhaseReadings> phase2 = [];
 List<PhaseReadings> phase3 = [];
@@ -40,9 +42,7 @@ List<ElectricAvg> electricAvg= [];
 List<WaterReadings> waterReadings = [];
 
 Future getAllData() async {
-  await getPhase('1');
-  await getPhase('2');
-  await getPhase('3');
+  await getPhases(false);
   await getElectricAvg();
   await getWaterReadings();
   await getAvgPowerActive(1);
@@ -61,30 +61,28 @@ String formatTimestamp(String timestamp) {
     return format.format(ourTimeZone);
 }
 
-Future getPhase(String phase) async {
-  if(phase == '1') {
-    phase1 = [];
-    var result = await APIService.fetchPhase('1');
-    for(final item in result.dataset) {
-      phase1.add(PhaseReadings(timestamp: formatTimestamp(item[0]), voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
-    }
+Future getPhases(bool getMore) async {
+  getMore ? pagesLoaded++ : pagesLoaded;
+
+  phase1 = [];
+  var result = await APIService.fetchPhase(1, pagesLoaded);
+  for(final item in result.dataset) {
+    phase1.add(PhaseReadings(timestamp: formatTimestamp(item[0]), voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
   }
 
-  if(phase == '2') {
-    phase2 = [];
-    var result = await APIService.fetchPhase('2');
-    for(final item in result.dataset) {
-      phase2.add(PhaseReadings(timestamp: formatTimestamp(item[0]), voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
-    }
+  phase2 = [];
+  result = await APIService.fetchPhase(2, pagesLoaded);
+  for(final item in result.dataset) {
+    phase2.add(PhaseReadings(timestamp: formatTimestamp(item[0]), voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
   }
 
-  if(phase == '3') {
-    phase3 = [];
-    var result = await APIService.fetchPhase('3');
-    for(final item in result.dataset) {
-      phase3.add(PhaseReadings(timestamp: formatTimestamp(item[0]), voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
-    }
+  phase3 = [];
+  result = await APIService.fetchPhase(3, pagesLoaded);
+  for(final item in result.dataset) {
+    phase3.add(PhaseReadings(timestamp: formatTimestamp(item[0]), voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
   }
+  getCombinedPhases();
+  print('pagesLoaded: $pagesLoaded  phase length: ${phase1.length}');
 }
 
 
