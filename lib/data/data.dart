@@ -31,20 +31,23 @@ const availableCategories = [
   
 ];
 
+int combinedPhasesAvgPagesLoaded = 1;
+int electricAvgPagesLoaded = 1;
+int waterReadingsPagesLoaded = 1;
+
 List<PhaseReadings> phase1 = [];
 List<PhaseReadings> phase2 = [];
 List<PhaseReadings> phase3 = [];
 List<PhaseReadings> combinedPhasesAvg = [];
 List<ChartData> avgPowerActive = [];
-List<ElectricAvg> electricAvg= [];
+
+List<ElectricAvg> electricAvg = [];
 List<WaterReadings> waterReadings = [];
 
 Future getAllData() async {
-  await getPhase('1');
-  await getPhase('2');
-  await getPhase('3');
-  await getElectricAvg();
-  await getWaterReadings();
+  await getPhases(false);
+  await getElectricAvg(false);
+  await getWaterReadings(false);
   await getAvgPowerActive(1);
   getCombinedPhases();
 }
@@ -61,53 +64,63 @@ String formatTimestamp(String timestamp) {
     return format.format(ourTimeZone);
 }
 
-Future getPhase(String phase) async {
-  if(phase == '1') {
-    phase1 = [];
-    var result = await APIService.fetchPhase('1');
-    for(final item in result.dataset) {
-      phase1.add(PhaseReadings(timestamp: formatTimestamp(item[0]), voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
-    }
+Future getPhases(bool getMore) async {
+  getMore ? combinedPhasesAvgPagesLoaded++ : combinedPhasesAvgPagesLoaded;
+
+  phase1 = [];
+  var result = await APIService.fetchPhase(1, combinedPhasesAvgPagesLoaded);
+  for(final item in result.dataset) {
+    phase1.add(PhaseReadings(timestamp: formatTimestamp(item[0]), voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
   }
 
-  if(phase == '2') {
-    phase2 = [];
-    var result = await APIService.fetchPhase('2');
-    for(final item in result.dataset) {
-      phase2.add(PhaseReadings(timestamp: formatTimestamp(item[0]), voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
-    }
+  phase2 = [];
+  result = await APIService.fetchPhase(2, combinedPhasesAvgPagesLoaded);
+  for(final item in result.dataset) {
+    phase2.add(PhaseReadings(timestamp: formatTimestamp(item[0]), voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
   }
 
-  if(phase == '3') {
-    phase3 = [];
-    var result = await APIService.fetchPhase('3');
-    for(final item in result.dataset) {
-      phase3.add(PhaseReadings(timestamp: formatTimestamp(item[0]), voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
-    }
+  phase3 = [];
+  result = await APIService.fetchPhase(3, combinedPhasesAvgPagesLoaded);
+  for(final item in result.dataset) {
+    phase3.add(PhaseReadings(timestamp: formatTimestamp(item[0]), voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
   }
+  getCombinedPhases();
+  print('combinedPhasesAvgPagesLoaded: $combinedPhasesAvgPagesLoaded  phase length: ${phase1.length}');
 }
 
 
-Future getElectricAvg() async {
+Future getElectricAvg(bool getMore) async {
+  getMore ? electricAvgPagesLoaded++ : electricAvgPagesLoaded;
+
   electricAvg = [];
-  var result = await APIService.fetchElectricAvg();
+  var result = await APIService.fetchElectricAvg(electricAvgPagesLoaded);
   for(final item in result.dataset) {
-    electricAvg.add(ElectricAvg(timestamp: item[0], currentDemand: item[1], powerActiveDemand: item[2], powerApparentDemand: item[3]));
+    electricAvg.add(ElectricAvg(timestamp: formatTimestamp(item[0]), currentDemand: item[1], powerActiveDemand: item[2], powerApparentDemand: item[3]));
   }
 }
 
-Future getWaterReadings() async {
+Future getWaterReadings(bool getMore) async {
+  getMore ? waterReadingsPagesLoaded++ : waterReadingsPagesLoaded;
   waterReadings = [];
-  var result = await APIService.fetchWaterReadings();
+  var result = await APIService.fetchWaterReadings(waterReadingsPagesLoaded);
 
   for(final item in result.dataset) {
-    waterReadings.add(WaterReadings(timestamp: item[0], pressureStatus: item[1], diverterStatus: item[2], oilStatus: item[3], waterStatus: item[4], waterLevel: 3, diverterPosition: 2));
+    waterReadings.add(WaterReadings(timestamp: formatTimestamp(item[0]), pressureStatus: item[1], diverterStatus: item[2], oilStatus: item[3], waterStatus: item[4], waterLevel: 3, diverterPosition: 2));
   }
 }
 
 Future getAvgPowerActive(double timeRangeDays) async {
   avgPowerActive = [];
     var result = await APIService.fetchPowerActive(timeRangeDays);
+    if(result.dataset.length < 60){
+      var oldest = await APIService.fetchOldest();
+      var latest = await APIService.fetchLatest();
+      var oldestDate = DateTime.parse(oldest.dataset[0][0]);
+      var latestDate = DateTime.parse(latest.dataset[0][0]);
+      print('oldest: ${oldestDate}    latest: ${latestDate}');
+      var days = oldestDate.difference(latestDate).inDays;
+      result = await APIService.fetchPowerActive(days.toDouble());
+    }
     for(int i = result.dataset.length - 1; i >= 0; i--) {
       avgPowerActive.add(ChartData(formatTimestamp(result.dataset[i][0]), result.dataset[i][1]));
     }

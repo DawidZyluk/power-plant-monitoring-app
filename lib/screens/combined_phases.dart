@@ -4,66 +4,27 @@ import 'package:MEWA/data/data.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 
-List<PhaseReadings> combinedPhases = <PhaseReadings>[];
-
-late CombinedPhasesDataSource combinedPhasesDataSource;
-
-class CombinedPhasesDataSource extends DataGridSource {
-  CombinedPhasesDataSource({required List<PhaseReadings> combinedPhases}) {
-    _combinedPhases = combinedPhases
-        .map<DataGridRow>((e) => DataGridRow(cells: [
-              DataGridCell<String>(
-                  columnName: 'date', value: e.timestamp.split(' ')[0]),
-              DataGridCell<String>(
-                  columnName: 'time', value: e.timestamp.split(' ')[1]),
-              DataGridCell<double>(columnName: 'voltageAvg', value: e.voltage),
-              DataGridCell<double>(columnName: 'currentAvg', value: e.current),
-              DataGridCell<double>(
-                  columnName: 'powerActiveAvg', value: e.powerActive),
-              DataGridCell<double>(
-                  columnName: 'powerReactveAvg', value: e.powerReactive),
-              DataGridCell<double>(
-                  columnName: 'powerApparentAvg', value: e.powerApparent),
-            ]))
-        .toList();
-  }
-
-  List<DataGridRow> _combinedPhases = [];
-
-  @override
-  List<DataGridRow> get rows => _combinedPhases;
-
-  @override
-  DataGridRowAdapter? buildRow(DataGridRow row) {
-    return DataGridRowAdapter(
-        cells: row.getCells().map<Widget>((dataGridCell) {
-      return Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.all(16.0),
-        child: Text(dataGridCell.value.toString()),
-      );
-    }).toList());
-  }
-}
 
 class CombinedPhasesScreen extends StatefulWidget {
-  const CombinedPhasesScreen({super.key, required this.title});
-
+  CombinedPhasesScreen({Key? key, required this.title}) : super(key: key);
   final String title;
-
   @override
-  State<CombinedPhasesScreen> createState() => _CombinedPhasesScreenState();
+  _CombinedPhasesScreenState createState() =>
+      _CombinedPhasesScreenState();
 }
 
-class _CombinedPhasesScreenState extends State<CombinedPhasesScreen> {
-  String _currentPhase = 'avg';
+String _currentPhase = 'avg';
+
+class _CombinedPhasesScreenState
+    extends State<CombinedPhasesScreen> {
+  List<PhaseReadings> _phases = <PhaseReadings>[];
+  late PhasesDataSource _phasesDataSource;
 
   @override
   void initState() {
+    _phases = combinedPhasesAvg;
+    _phasesDataSource = PhasesDataSource(phases: _phases);
     super.initState();
-    combinedPhases = combinedPhasesAvg;
-    combinedPhasesDataSource =
-        CombinedPhasesDataSource(combinedPhases: combinedPhases);
   }
 
   @override
@@ -97,91 +58,119 @@ class _CombinedPhasesScreenState extends State<CombinedPhasesScreen> {
       content = Column(
         children: [
           Container(
-              height: 500,
+              height: 550,
               decoration: BoxDecoration(color: Colors.white),
               child: SfDataGridTheme(
-                data: SfDataGridThemeData(
-                  headerColor: Color.fromARGB(255, 226, 226, 226)
-                ),
-                child: SfDataGrid(
-                columnWidthMode: ColumnWidthMode.auto,
-                onQueryRowHeight: (details) {
-                  // Set the row height as 70.0 to the column header row.
-                  return details.rowIndex == 0 ? 50.0 : 49.0;
-                },
-                source: combinedPhasesDataSource,
-                columns: <GridColumn>[
-                  GridColumn(
-                      columnName: 'date',
-                      label: Container(
-                          padding: EdgeInsets.all(16.0),
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Data',
-                          ))),
-                  GridColumn(
-                      columnName: 'time',
-                      label: Container(
-                          padding: EdgeInsets.all(6.0),
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Godzina',
-                            softWrap: false,
-                          ))),
-                  GridColumn(
-                      columnName: 'voltageAvg',
-                      label: Container(
-                          padding: EdgeInsets.all(6.0),
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Napięcie [V]',
-                            softWrap: false,
-                          ))),
-                  GridColumn(
-                      columnName: 'currentAvg',
-                      label: Container(
-                          padding: EdgeInsets.all(6.0),
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Prąd [A]',
-                          ))),
-                  GridColumn(
-                      columnName: 'powerActiveAvg',
-                      label: Container(
-                          padding: EdgeInsets.all(6.0),
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Moc czynna [kW]',
-                            textAlign: TextAlign.center,
-                          ))),
-                  GridColumn(
-                      columnName: 'powerReactiveAvg',
-                      label: Container(
-                          padding: EdgeInsets.all(16.0),
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Moc bierna [kVar]',
-                          ))),
-                  GridColumn(
-                      columnName: 'powerApparentAvg',
-                      label: Container(
-                          padding: EdgeInsets.all(16.0),
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Moc pozorna [kVa]',
-                            softWrap: false,
-                          ))),
-                ],
-              )
-              )),
+                  data: SfDataGridThemeData(
+                      headerColor: Color.fromARGB(255, 226, 226, 226)),
+                  child: SfDataGrid(
+                    loadMoreViewBuilder: (context, loadMoreRows) {
+                      Future<String> loadRows() async {
+                        await loadMoreRows();
+                        return Future<String>.value('Completed');
+                      }
+
+                      return FutureBuilder<String>(
+                          initialData: 'loading',
+                          future: loadRows(),
+                          builder: (context, snapShot) {
+                            if (snapShot.data == 'loading') {
+                              return Container(
+                                  height: 60.0,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: BorderDirectional(
+                                          top: BorderSide(
+                                              width: 1.0,
+                                              color: Color.fromRGBO(
+                                                  0, 0, 0, 0.26)))),
+                                  alignment: Alignment.center,
+                                  child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation(
+                                          Colors.deepPurple)));
+                            } else {
+                              return SizedBox.fromSize(size: Size.zero);
+                            }
+                          });
+                    },
+                    columnWidthMode: ColumnWidthMode.auto,
+                    onQueryRowHeight: (details) {
+                      // Set the row height as 70.0 to the column header row.
+                      return details.rowIndex == 0 ? 50.0 : 49.0;
+                    },
+                    source: _phasesDataSource,
+                    columns: <GridColumn>[
+                      GridColumn(
+                          columnName: 'date',
+                          label: Container(
+                              padding: EdgeInsets.all(16.0),
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Data',
+                              ))),
+                      GridColumn(
+                          columnName: 'time',
+                          label: Container(
+                              padding: EdgeInsets.all(6.0),
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Godzina',
+                                softWrap: false,
+                              ))),
+                      GridColumn(
+                          columnName: 'voltageAvg',
+                          label: Container(
+                              padding: EdgeInsets.all(6.0),
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Napięcie [V]',
+                                softWrap: false,
+                              ))),
+                      GridColumn(
+                          columnName: 'currentAvg',
+                          label: Container(
+                              padding: EdgeInsets.all(6.0),
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Prąd [A]',
+                              ))),
+                      GridColumn(
+                          columnName: 'powerActiveAvg',
+                          label: Container(
+                              padding: EdgeInsets.all(6.0),
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Moc czynna [kW]',
+                                textAlign: TextAlign.center,
+                              ))),
+                      GridColumn(
+                          columnName: 'powerReactiveAvg',
+                          label: Container(
+                              padding: EdgeInsets.all(16.0),
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Moc bierna [kVar]',
+                              ))),
+                      GridColumn(
+                          columnName: 'powerApparentAvg',
+                          label: Container(
+                              padding: EdgeInsets.all(16.0),
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Moc pozorna [kVa]',
+                                softWrap: false,
+                              ))),
+                    ],
+                  ))),
           Container(
             margin: EdgeInsets.only(top: 40, bottom: 5),
             child: OutlinedButton(
                 onPressed: () {
                   setState(() {
                     _currentPhase = 'avg';
-                    combinedPhasesDataSource = CombinedPhasesDataSource(
-                        combinedPhases: combinedPhasesAvg);
+                    _phasesDataSource = PhasesDataSource(
+                        phases: combinedPhasesAvg);
                   });
                 },
                 style: OutlinedButton.styleFrom(
@@ -210,8 +199,8 @@ class _CombinedPhasesScreenState extends State<CombinedPhasesScreen> {
                     onPressed: () {
                       setState(() {
                         _currentPhase = '1';
-                        combinedPhasesDataSource =
-                            CombinedPhasesDataSource(combinedPhases: phase1);
+                        _phasesDataSource =
+                            PhasesDataSource(phases: phase1);
                       });
                     },
                     style: OutlinedButton.styleFrom(
@@ -237,8 +226,8 @@ class _CombinedPhasesScreenState extends State<CombinedPhasesScreen> {
                     onPressed: () {
                       setState(() {
                         _currentPhase = '2';
-                        combinedPhasesDataSource =
-                            CombinedPhasesDataSource(combinedPhases: phase2);
+                        _phasesDataSource =
+                            PhasesDataSource(phases: phase2);
                       });
                     },
                     style: OutlinedButton.styleFrom(
@@ -264,8 +253,8 @@ class _CombinedPhasesScreenState extends State<CombinedPhasesScreen> {
                     onPressed: () {
                       setState(() {
                         _currentPhase = '3';
-                        combinedPhasesDataSource =
-                            CombinedPhasesDataSource(combinedPhases: phase3);
+                        _phasesDataSource =
+                            PhasesDataSource(phases: phase3);
                       });
                     },
                     style: OutlinedButton.styleFrom(
@@ -296,5 +285,71 @@ class _CombinedPhasesScreenState extends State<CombinedPhasesScreen> {
           title: const Text('Odczyt faz'),
         ),
         body: content);
+  }
+}
+
+class PhasesDataSource extends DataGridSource {
+  PhasesDataSource({required List<PhaseReadings> phases}) {
+    _combinedPhases = phases
+        .map<DataGridRow>((e) => DataGridRow(cells: [
+              DataGridCell<String>(
+                  columnName: 'date', value: e.timestamp.split(' ')[0]),
+              DataGridCell<String>(
+                  columnName: 'time', value: e.timestamp.split(' ')[1]),
+              DataGridCell<double>(columnName: 'voltageAvg', value: e.voltage),
+              DataGridCell<double>(columnName: 'currentAvg', value: e.current),
+              DataGridCell<double>(
+                  columnName: 'powerActiveAvg', value: e.powerActive),
+              DataGridCell<double>(
+                  columnName: 'powerReactveAvg', value: e.powerReactive),
+              DataGridCell<double>(
+                  columnName: 'powerApparentAvg', value: e.powerApparent),
+            ]))
+        .toList();
+  }
+
+List<DataGridRow> _combinedPhases = [];
+
+  @override
+  List<DataGridRow> get rows => _combinedPhases;
+
+  void _addMoreRows(int count) {
+    int startIndex = _combinedPhases.isNotEmpty ? _combinedPhases.length : 0,
+        endIndex = startIndex + count;
+    for (int i = startIndex; i < endIndex; i++) {
+      _combinedPhases.add(DataGridRow(cells: [
+              DataGridCell<String>(
+                  columnName: 'date', value: combinedPhasesAvg[i].timestamp.split(' ')[0]),
+              DataGridCell<String>(
+                  columnName: 'time', value: combinedPhasesAvg[i].timestamp.split(' ')[1]),
+              DataGridCell<double>(columnName: 'voltageAvg', value: combinedPhasesAvg[i].voltage),
+              DataGridCell<double>(columnName: 'currentAvg', value: combinedPhasesAvg[i].current),
+              DataGridCell<double>(
+                  columnName: 'powerActiveAvg', value: combinedPhasesAvg[i].powerActive),
+              DataGridCell<double>(
+                  columnName: 'powerReactveAvg', value: combinedPhasesAvg[i].powerReactive),
+              DataGridCell<double>(
+                  columnName: 'powerApparentAvg', value: combinedPhasesAvg[i].powerApparent),
+            ]));
+    }
+  }
+
+  @override
+  Future<void> handleLoadMoreRows() async {
+    await getPhases(true);
+    _addMoreRows(20);
+    notifyListeners();
+  }
+
+  @override
+  DataGridRowAdapter? buildRow(DataGridRow row) {
+    return DataGridRowAdapter(
+        cells: row.getCells().map<Widget>((e) {
+      return Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Text(e.value.toString()),
+      );
+    }).toList());
   }
 }
