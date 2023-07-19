@@ -106,6 +106,15 @@ Future getWaterReadings() async {
 Future getAvgPowerActive(double timeRangeDays) async {
   avgPowerActive = [];
     var result = await APIService.fetchPowerActive(timeRangeDays);
+    if(result.dataset.length < 60){
+      var oldest = await APIService.fetchOldest();
+      var latest = await APIService.fetchLatest();
+      var oldestDate = DateTime.parse(oldest.dataset[0][0]);
+      var latestDate = DateTime.parse(latest.dataset[0][0]);
+      print('oldest: ${oldestDate}    latest: ${latestDate}');
+      var days = oldestDate.difference(latestDate).inDays;
+      result = await APIService.fetchPowerActive(days.toDouble());
+    }
     for(int i = result.dataset.length - 1; i >= 0; i--) {
       avgPowerActive.add(ChartData(formatTimestamp(result.dataset[i][0]), result.dataset[i][1]));
     }
