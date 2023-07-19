@@ -31,10 +31,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     if (category.id == "c1")
       screen = CombinedPhasesScreen(title: category.title);
     if (category.id == "c2")
-      screen = ElectricAvgScreen(title: category.title, readings: electricAvg);
+      screen = ElectricAvgScreen(title: category.title);
     if (category.id == "c3")
       screen =
-          WaterReadingsScreen(title: category.title, readings: waterReadings);
+          WaterReadingsScreen(title: category.title);
     if (category.id == "c4") screen = PowerActiveChart();
 
     Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => screen));

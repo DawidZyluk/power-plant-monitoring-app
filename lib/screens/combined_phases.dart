@@ -58,7 +58,7 @@ class _CombinedPhasesScreenState
       content = Column(
         children: [
           Container(
-              height: 500,
+              height: 550,
               decoration: BoxDecoration(color: Colors.white),
               child: SfDataGridTheme(
                   data: SfDataGridThemeData(
@@ -337,7 +337,7 @@ List<DataGridRow> _combinedPhases = [];
   @override
   Future<void> handleLoadMoreRows() async {
     await getPhases(true);
-    _addMoreRows(10);
+    _addMoreRows(20);
     notifyListeners();
   }
 
