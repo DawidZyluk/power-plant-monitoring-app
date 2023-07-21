@@ -49,12 +49,16 @@ List<ChartData> avgPowerActive = [];
 List<ElectricAvg> electricAvg = [];
 List<WaterReadings> waterReadings = [];
 
+DateTime now = new DateTime.now();
+DateTime date = new DateTime(now.year, now.month, now.day);
+String currentMonth = date.toString().substring(0,7);
+
 Future getAllData() async {
   await getPhases(false);
   await getElectricAvg(false);
   await getWaterReadings(false);
   await getAvgPowerActive(1);
-  await getCombinedPhasesMonthAvg();
+  await getCombinedPhasesMonthAvg(currentMonth);
   getCombinedPhases();
 }
 
@@ -143,9 +147,9 @@ void getCombinedPhases() {
   }
 }
 
-Future getCombinedPhasesMonthAvg() async {
+Future getCombinedPhasesMonthAvg(String month) async {
   combinedPhasesMonthAvg = [];
-  var result = await APIService.fetchCurrentMonth();
+  var result = await APIService.fetchCurrentMonth(month);
   for(int index = 0; index < result.dataset.length; index++) {
     var item = result.dataset[index];
     combinedPhasesMonthAvg.add(PhaseReadings(timestamp: formatTimestamp(item[0]), voltage: item[1], current: item[2], powerActive: item[3], powerReactive: item[4], powerApparent: item[5]));

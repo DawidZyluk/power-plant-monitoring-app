@@ -5,6 +5,7 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 
 import 'package:syncfusion_flutter_datagrid_export/export.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' hide Column, Row;
 import 'package:MEWA/utils/save_file.dart' as helper;
 
@@ -18,26 +19,42 @@ class _MonthDataGridState extends State<MonthDataGrid> {
   List<PhaseReadings> _phases = <PhaseReadings>[];
   late PhasesDataSource _phasesDataSource;
   final GlobalKey<SfDataGridState> _key = GlobalKey<SfDataGridState>();
+  String _currentMonth = '';
 
   @override
   void initState() {
+    DateTime now = new DateTime.now();
+    DateTime date = new DateTime(now.year, now.month, now.day);
+    String month = date.toString().substring(0, 7);
+
     _phases = combinedPhasesMonthAvg;
     _phasesDataSource = PhasesDataSource(phases: _phases);
+    _currentMonth = month;
+    getCombinedPhasesMonthAvg(_currentMonth);
     super.initState();
   }
 
   Future<void> exportDataGridToExcel() async {
-    DateTime now = new DateTime.now();
-    DateTime date = new DateTime(now.year, now.month, now.day);
-    String month = date.toString().substring(0,7);
     final Workbook workbook = _key.currentState!.exportToExcelWorkbook();
     final List<int> bytes = workbook.saveAsStream();
     workbook.dispose();
-    await helper.saveAndLaunchFile(bytes, 'podsumowanie_miesiaca_$month.xlsx');
+    await helper.saveAndLaunchFile(
+        bytes, 'podsumowanie miesiąca $_currentMonth.xlsx');
+  }
+
+  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) async {
+    String selectedMonth = args.value.toString().split(' ')[0].substring(0, 7);
+    await getCombinedPhasesMonthAvg(selectedMonth);
+    setState(() {
+      _phases = combinedPhasesMonthAvg;
+      _phasesDataSource = PhasesDataSource(phases: _phases);
+      _currentMonth = selectedMonth;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    print(_currentMonth);
     Widget content = Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -145,14 +162,39 @@ class _MonthDataGridState extends State<MonthDataGrid> {
                 )),
           )),
           Container(
-            padding: EdgeInsets.only(top: 10, bottom: 10),
+            //padding: EdgeInsets.only(top: 10, bottom: 10),
             child: MaterialButton(
-                color: Colors.blue,
-                child: const Center(
-                    child: Text('Export to Excel',
-                        style: TextStyle(color: Colors.white))),
+                color: const Color.fromARGB(255, 16, 124, 65),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Eksportuj do Excela',
+                        style: TextStyle(color: Colors.white)),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Icon(
+                      Icons.output,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
                 onPressed: exportDataGridToExcel),
           ),
+          Container(
+            height: 250,
+            //margin: EdgeInsets.only(top: 40, bottom: 40),
+            margin: EdgeInsets.all(25),
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(10)),
+            child: SfDateRangePicker(
+              onSelectionChanged: _onSelectionChanged,
+              view: DateRangePickerView.year,
+              allowViewNavigation: false,
+            ),
+          )
         ],
       );
     }
@@ -173,14 +215,21 @@ class PhasesDataSource extends DataGridSource {
                   columnName: 'date', value: e.timestamp.split(' ')[0]),
               DataGridCell<String>(
                   columnName: 'time', value: e.timestamp.split(' ')[1]),
-              DataGridCell<double>(columnName: 'voltageAvg', value: e.voltage),
-              DataGridCell<double>(columnName: 'currentAvg', value: e.current),
-              DataGridCell<double>(
-                  columnName: 'powerActiveAvg', value: e.powerActive),
-              DataGridCell<double>(
-                  columnName: 'powerReactiveAvg', value: e.powerReactive),
-              DataGridCell<double>(
-                  columnName: 'powerApparentAvg', value: e.powerApparent),
+              DataGridCell<String>(
+                  columnName: 'voltageAvg',
+                  value: e.voltage.toStringAsFixed(2)),
+              DataGridCell<String>(
+                  columnName: 'currentAvg',
+                  value: e.current.toStringAsFixed(2)),
+              DataGridCell<String>(
+                  columnName: 'powerActiveAvg',
+                  value: (e.powerActive / 1000).toStringAsFixed(2)),
+              DataGridCell<String>(
+                  columnName: 'powerReactiveAvg',
+                  value: (e.powerReactive / 1000).toStringAsFixed(2)),
+              DataGridCell<String>(
+                  columnName: 'powerApparentAvg',
+                  value: (e.powerApparent / 1000).toStringAsFixed(2)),
             ]))
         .toList();
   }

@@ -33,11 +33,14 @@ class _CombinedPhasesScreenState extends State<CombinedPhasesScreen> {
     final Workbook workbook = _key.currentState!.exportToExcelWorkbook();
     final List<int> bytes = workbook.saveAsStream();
     workbook.dispose();
+    var end = _phases[0].timestamp.replaceFirst(':', 'h') + 'min';
+    var start =
+        _phases[_phases.length - 1].timestamp.replaceFirst(':', 'h') + 'min';
     var fileName;
-    if(_currentPhase == 'avg') fileName = 'srednia_faz.xlsx';
-    if(_currentPhase == '1') fileName = 'faza_1.xlsx';
-    if(_currentPhase == '2') fileName = 'faza_2.xlsx';
-    if(_currentPhase == '3') fileName = 'faza_3.xlsx';
+    if (_currentPhase == 'avg') fileName = 'średnia faz ($start - $end).xlsx';
+    if (_currentPhase == '1') fileName = 'faza 1 ($start - $end).xlsx';
+    if (_currentPhase == '2') fileName = 'faza 2 ($start - $end).xlsx';
+    if (_currentPhase == '3') fileName = 'faza 3 ($start - $end).xlsx';
 
     await helper.saveAndLaunchFile(bytes, fileName);
   }
@@ -72,12 +75,6 @@ class _CombinedPhasesScreenState extends State<CombinedPhasesScreen> {
     if (phase1.isNotEmpty && phase2.isNotEmpty && phase3.isNotEmpty) {
       content = Column(
         children: [
-          MaterialButton(
-              color: Colors.blue,
-              child: const Center(
-                  child: Text('Export to Excel',
-                      style: TextStyle(color: Colors.white))),
-              onPressed: exportDataGridToExcel),
           Container(
               height: 550,
               decoration: BoxDecoration(color: Colors.white),
@@ -185,8 +182,26 @@ class _CombinedPhasesScreenState extends State<CombinedPhasesScreen> {
                               ))),
                     ],
                   ))),
+          MaterialButton(
+              color: const Color.fromARGB(255, 16,124,65),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Eksportuj do Excela',
+                      style: TextStyle(color: Colors.white)),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Icon(
+                    Icons.output,
+                    size: 20,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+              onPressed: exportDataGridToExcel),
           Container(
-            margin: EdgeInsets.only(top: 40, bottom: 5),
+            margin: EdgeInsets.only(top: 30, bottom: 5),
             child: OutlinedButton(
                 onPressed: () {
                   setState(() {
