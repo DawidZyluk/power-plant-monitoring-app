@@ -4,27 +4,42 @@ import 'package:MEWA/data/data.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 
+import 'package:syncfusion_flutter_datagrid_export/export.dart';
+import 'package:syncfusion_flutter_xlsio/xlsio.dart' hide Column, Row;
+import 'package:MEWA/utils/save_file.dart' as helper;
 
 class CombinedPhasesScreen extends StatefulWidget {
   CombinedPhasesScreen({Key? key, required this.title}) : super(key: key);
   final String title;
   @override
-  _CombinedPhasesScreenState createState() =>
-      _CombinedPhasesScreenState();
+  _CombinedPhasesScreenState createState() => _CombinedPhasesScreenState();
 }
 
 String _currentPhase = 'avg';
 
-class _CombinedPhasesScreenState
-    extends State<CombinedPhasesScreen> {
+class _CombinedPhasesScreenState extends State<CombinedPhasesScreen> {
   List<PhaseReadings> _phases = <PhaseReadings>[];
   late PhasesDataSource _phasesDataSource;
+  final GlobalKey<SfDataGridState> _key = GlobalKey<SfDataGridState>();
 
   @override
   void initState() {
     _phases = combinedPhasesAvg;
     _phasesDataSource = PhasesDataSource(phases: _phases);
     super.initState();
+  }
+
+  Future<void> exportDataGridToExcel() async {
+    final Workbook workbook = _key.currentState!.exportToExcelWorkbook();
+    final List<int> bytes = workbook.saveAsStream();
+    workbook.dispose();
+    var fileName;
+    if(_currentPhase == 'avg') fileName = 'srednia_faz.xlsx';
+    if(_currentPhase == '1') fileName = 'faza_1.xlsx';
+    if(_currentPhase == '2') fileName = 'faza_2.xlsx';
+    if(_currentPhase == '3') fileName = 'faza_3.xlsx';
+
+    await helper.saveAndLaunchFile(bytes, fileName);
   }
 
   @override
@@ -57,6 +72,12 @@ class _CombinedPhasesScreenState
     if (phase1.isNotEmpty && phase2.isNotEmpty && phase3.isNotEmpty) {
       content = Column(
         children: [
+          MaterialButton(
+              color: Colors.blue,
+              child: const Center(
+                  child: Text('Export to Excel',
+                      style: TextStyle(color: Colors.white))),
+              onPressed: exportDataGridToExcel),
           Container(
               height: 550,
               decoration: BoxDecoration(color: Colors.white),
@@ -64,6 +85,7 @@ class _CombinedPhasesScreenState
                   data: SfDataGridThemeData(
                       headerColor: Color.fromARGB(255, 226, 226, 226)),
                   child: SfDataGrid(
+                    key: _key,
                     loadMoreViewBuilder: (context, loadMoreRows) {
                       Future<String> loadRows() async {
                         await loadMoreRows();
@@ -169,8 +191,8 @@ class _CombinedPhasesScreenState
                 onPressed: () {
                   setState(() {
                     _currentPhase = 'avg';
-                    _phasesDataSource = PhasesDataSource(
-                        phases: combinedPhasesAvg);
+                    _phasesDataSource =
+                        PhasesDataSource(phases: combinedPhasesAvg);
                   });
                 },
                 style: OutlinedButton.styleFrom(
@@ -199,8 +221,7 @@ class _CombinedPhasesScreenState
                     onPressed: () {
                       setState(() {
                         _currentPhase = '1';
-                        _phasesDataSource =
-                            PhasesDataSource(phases: phase1);
+                        _phasesDataSource = PhasesDataSource(phases: phase1);
                       });
                     },
                     style: OutlinedButton.styleFrom(
@@ -226,8 +247,7 @@ class _CombinedPhasesScreenState
                     onPressed: () {
                       setState(() {
                         _currentPhase = '2';
-                        _phasesDataSource =
-                            PhasesDataSource(phases: phase2);
+                        _phasesDataSource = PhasesDataSource(phases: phase2);
                       });
                     },
                     style: OutlinedButton.styleFrom(
@@ -253,8 +273,7 @@ class _CombinedPhasesScreenState
                     onPressed: () {
                       setState(() {
                         _currentPhase = '3';
-                        _phasesDataSource =
-                            PhasesDataSource(phases: phase3);
+                        _phasesDataSource = PhasesDataSource(phases: phase3);
                       });
                     },
                     style: OutlinedButton.styleFrom(
@@ -301,14 +320,14 @@ class PhasesDataSource extends DataGridSource {
               DataGridCell<double>(
                   columnName: 'powerActiveAvg', value: e.powerActive),
               DataGridCell<double>(
-                  columnName: 'powerReactveAvg', value: e.powerReactive),
+                  columnName: 'powerReactiveAvg', value: e.powerReactive),
               DataGridCell<double>(
                   columnName: 'powerApparentAvg', value: e.powerApparent),
             ]))
         .toList();
   }
 
-List<DataGridRow> _combinedPhases = [];
+  List<DataGridRow> _combinedPhases = [];
 
   @override
   List<DataGridRow> get rows => _combinedPhases;
@@ -318,19 +337,26 @@ List<DataGridRow> _combinedPhases = [];
         endIndex = startIndex + count;
     for (int i = startIndex; i < endIndex; i++) {
       _combinedPhases.add(DataGridRow(cells: [
-              DataGridCell<String>(
-                  columnName: 'date', value: combinedPhasesAvg[i].timestamp.split(' ')[0]),
-              DataGridCell<String>(
-                  columnName: 'time', value: combinedPhasesAvg[i].timestamp.split(' ')[1]),
-              DataGridCell<double>(columnName: 'voltageAvg', value: combinedPhasesAvg[i].voltage),
-              DataGridCell<double>(columnName: 'currentAvg', value: combinedPhasesAvg[i].current),
-              DataGridCell<double>(
-                  columnName: 'powerActiveAvg', value: combinedPhasesAvg[i].powerActive),
-              DataGridCell<double>(
-                  columnName: 'powerReactveAvg', value: combinedPhasesAvg[i].powerReactive),
-              DataGridCell<double>(
-                  columnName: 'powerApparentAvg', value: combinedPhasesAvg[i].powerApparent),
-            ]));
+        DataGridCell<String>(
+            columnName: 'date',
+            value: combinedPhasesAvg[i].timestamp.split(' ')[0]),
+        DataGridCell<String>(
+            columnName: 'time',
+            value: combinedPhasesAvg[i].timestamp.split(' ')[1]),
+        DataGridCell<double>(
+            columnName: 'voltageAvg', value: combinedPhasesAvg[i].voltage),
+        DataGridCell<double>(
+            columnName: 'currentAvg', value: combinedPhasesAvg[i].current),
+        DataGridCell<double>(
+            columnName: 'powerActiveAvg',
+            value: combinedPhasesAvg[i].powerActive),
+        DataGridCell<double>(
+            columnName: 'powerReactiveAvg',
+            value: combinedPhasesAvg[i].powerReactive),
+        DataGridCell<double>(
+            columnName: 'powerApparentAvg',
+            value: combinedPhasesAvg[i].powerApparent),
+      ]));
     }
   }
 

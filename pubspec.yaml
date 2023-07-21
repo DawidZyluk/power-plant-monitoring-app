@@ -36,6 +36,9 @@ dependencies:
   syncfusion_flutter_datagrid: ^22.1.37
   syncfusion_flutter_datagrid_export: ^22.1.37
   syncfusion_flutter_xlsio: ^22.1.37
+  open_file: ^3.3.2
+  path_provider: ^2.0.15
+  permission_handler: ^10.4.3
 
 
   # The following adds the Cupertino Icons font to your application.

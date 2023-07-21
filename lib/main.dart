@@ -5,6 +5,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:MEWA/screens/categories.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 final theme = ThemeData(
   scaffoldBackgroundColor: const Color.fromARGB(255, 0, 40, 85),
@@ -39,11 +40,23 @@ Widget homePage = Scaffold(
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationService().initNotification();
-  
+
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-  AndroidFlutterLocalNotificationsPlugin>()?.requestPermission();
+  flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.requestPermission();
+
+  var storage = await Permission.storage.status;
+  var external = await Permission.manageExternalStorage.status;
+
+  if (storage.isDenied) {
+    await Permission.storage.request();
+  }
+  if (external.isDenied) {
+    await Permission.manageExternalStorage.request();
+  }
 
   await dotenv.load(fileName: ".env");
   try {
