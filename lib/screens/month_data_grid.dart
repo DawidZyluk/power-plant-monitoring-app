@@ -162,39 +162,58 @@ class _MonthDataGridState extends State<MonthDataGrid> {
                 )),
           )),
           Container(
-            //padding: EdgeInsets.only(top: 10, bottom: 10),
-            child: MaterialButton(
-                color: const Color.fromARGB(255, 16, 124, 65),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Eksportuj do Excela',
-                        style: TextStyle(color: Colors.white)),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Icon(
-                      Icons.output,
-                      size: 20,
-                      color: Colors.white,
-                    ),
-                  ],
-                ),
-                onPressed: exportDataGridToExcel),
-          ),
-          Container(
-            height: 250,
-            //margin: EdgeInsets.only(top: 40, bottom: 40),
-            margin: EdgeInsets.all(25),
+            height: 230,
+            margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
+            //margin: EdgeInsets.all(25),
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                color: Color.fromARGB(255, 224, 224, 224),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10))),
             child: SfDateRangePicker(
               onSelectionChanged: _onSelectionChanged,
               view: DateRangePickerView.year,
               allowViewNavigation: false,
             ),
-          )
+          ),
+          Container(
+            decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 16, 124, 65),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10))),
+            margin: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+            padding: EdgeInsets.only(
+              left: 10,
+              right: 10,
+            ),
+            child: TextButton(
+                style: TextButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 16, 124, 65),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10))),
+                child: Container(
+                  //color: const Color.fromARGB(255, 16, 124, 65),
+                  height: 50,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Eksportuj do Excela',
+                          style: TextStyle(color: Colors.white)),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Icon(
+                        Icons.output,
+                        size: 20,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+                onPressed: exportDataGridToExcel),
+          ),
         ],
       );
     }

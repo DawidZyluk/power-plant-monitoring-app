@@ -33,14 +33,34 @@ class _CombinedPhasesScreenState extends State<CombinedPhasesScreen> {
     final Workbook workbook = _key.currentState!.exportToExcelWorkbook();
     final List<int> bytes = workbook.saveAsStream();
     workbook.dispose();
-    var end = _phases[0].timestamp.replaceFirst(':', 'h') + 'min';
-    var start =
-        _phases[_phases.length - 1].timestamp.replaceFirst(':', 'h') + 'min';
+
     var fileName;
-    if (_currentPhase == 'avg') fileName = 'średnia faz ($start - $end).xlsx';
-    if (_currentPhase == '1') fileName = 'faza 1 ($start - $end).xlsx';
-    if (_currentPhase == '2') fileName = 'faza 2 ($start - $end).xlsx';
-    if (_currentPhase == '3') fileName = 'faza 3 ($start - $end).xlsx';
+    if (_currentPhase == 'avg') {
+      var end = combinedPhasesAvg[0].timestamp.replaceFirst(':', 'h') + 'min';
+      var start = combinedPhasesAvg[combinedPhasesAvg.length - 1]
+              .timestamp
+              .replaceFirst(':', 'h') +
+          'min';
+      fileName = 'średnia faz ($start - $end).xlsx';
+    }
+    if (_currentPhase == '1') {
+      var end = phase1[0].timestamp.replaceFirst(':', 'h') + 'min';
+      var start =
+          phase1[phase1.length - 1].timestamp.replaceFirst(':', 'h') + 'min';
+      fileName = 'faza 1 ($start - $end).xlsx';
+    }
+    if (_currentPhase == '2') {
+      var end = phase2[0].timestamp.replaceFirst(':', 'h') + 'min';
+      var start =
+          phase2[phase2.length - 1].timestamp.replaceFirst(':', 'h') + 'min';
+      fileName = 'faza 2 ($start - $end).xlsx';
+    }
+    if (_currentPhase == '3') {
+      var end = phase3[0].timestamp.replaceFirst(':', 'h') + 'min';
+      var start =
+          phase3[phase3.length - 1].timestamp.replaceFirst(':', 'h') + 'min';
+      fileName = 'faza 3 ($start - $end).xlsx';
+    };
 
     await helper.saveAndLaunchFile(bytes, fileName);
   }
@@ -183,7 +203,7 @@ class _CombinedPhasesScreenState extends State<CombinedPhasesScreen> {
                     ],
                   ))),
           MaterialButton(
-              color: const Color.fromARGB(255, 16,124,65),
+              color: const Color.fromARGB(255, 16, 124, 65),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
