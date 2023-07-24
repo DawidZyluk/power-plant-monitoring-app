@@ -62,7 +62,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   @override
   void initState() {
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => refresh());
+    timer = Timer.periodic(Duration(minutes: 3), (Timer t) => refresh());
 
     setState(() {
       timestamp = phase1[0].timestamp;

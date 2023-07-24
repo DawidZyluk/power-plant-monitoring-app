@@ -183,7 +183,7 @@ class _MonthDataGridState extends State<MonthDataGrid> {
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(10),
                     bottomRight: Radius.circular(10))),
-            margin: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+            margin: EdgeInsets.only(bottom: 20, left: 10, right: 10),
             padding: EdgeInsets.only(
               left: 10,
               right: 10,

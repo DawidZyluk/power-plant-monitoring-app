@@ -202,24 +202,6 @@ class _CombinedPhasesScreenState extends State<CombinedPhasesScreen> {
                               ))),
                     ],
                   ))),
-          MaterialButton(
-              color: const Color.fromARGB(255, 16, 124, 65),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Eksportuj do Excela',
-                      style: TextStyle(color: Colors.white)),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Icon(
-                    Icons.output,
-                    size: 20,
-                    color: Colors.white,
-                  ),
-                ],
-              ),
-              onPressed: exportDataGridToExcel),
           Container(
             margin: EdgeInsets.only(top: 30, bottom: 5),
             child: OutlinedButton(
@@ -329,6 +311,33 @@ class _CombinedPhasesScreenState extends State<CombinedPhasesScreen> {
                     )),
               ],
             ),
+          ),
+          Container(
+            child: TextButton(
+                style: TextButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 16, 124, 65),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10))),
+                child: Container(
+                  width: 260,
+                  height: 40,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Eksportuj do Excela',
+                          style: TextStyle(color: Colors.white)),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Icon(
+                        Icons.output,
+                        size: 20,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+                onPressed: exportDataGridToExcel),
           ),
         ],
       );
