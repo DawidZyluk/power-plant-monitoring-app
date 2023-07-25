@@ -11,6 +11,7 @@ Water power plants are crucial for generating renewable energy from water resour
 - Historical data analysis and visualization with customizable time ranges and data filters.
 - Alerts and notifications for critical events or abnormal conditions.
 - Intuitive user interface for easy navigation and interaction.
+- Exporting data to Excel workbooks
 ## Technologies
 The key technologies used in this project are:
 
