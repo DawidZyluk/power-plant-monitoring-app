@@ -68,8 +68,8 @@ The application will launch on the connected device or emulator, allowing you to
 <img alt="phases" src="https://github.com/DawidZyluk/power-plant-monitoring-app/assets/91137753/eb972fc4-28d8-4646-9848-92f0772a8388" width="270" height="600"/>
 <img alt="chart" src="https://github.com/DawidZyluk/power-plant-monitoring-app/assets/91137753/aec38317-ce5b-45da-8011-ab2db074b4be" width="270" height="600"/>
 <img alt="month" src="https://github.com/DawidZyluk/power-plant-monitoring-app/assets/91137753/e7798e1d-18b3-45a3-abb9-3040e8231cbe" width="270" height="600"/>
-<img alt="water" src="https://github.com/DawidZyluk/power-plant-monitoring-app/assets/91137753/965130b4-12de-4f34-b2f4-4d3c8f8b9385" width="216" height="480"/>
-<img alt="power" src="https://github.com/DawidZyluk/power-plant-monitoring-app/assets/91137753/cc40ae84-de44-4f55-8d69-6f8beb1c3ba8" width="216" height="480"/>
+<img alt="water" src="https://github.com/DawidZyluk/power-plant-monitoring-app/assets/91137753/965130b4-12de-4f34-b2f4-4d3c8f8b9385" width="270" height="600"/>
+<img alt="power" src="https://github.com/DawidZyluk/power-plant-monitoring-app/assets/91137753/cc40ae84-de44-4f55-8d69-6f8beb1c3ba8" width="270" height="600"/>
 
 ## Credits
 App icon was created by Jesus Chavarria on flaticon: https://www.flaticon.com/free-icon/seagull_3127593
