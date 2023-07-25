@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'dart:async';
+import 'package:MEWA/screens/month_data_grid.dart';
 import 'package:MEWA/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:MEWA/data/data.dart';
@@ -36,6 +37,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       screen =
           WaterReadingsScreen(title: category.title);
     if (category.id == "c4") screen = PowerActiveChart();
+    if (category.id == "c5") screen = MonthDataGrid();
 
     Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => screen));
   }
@@ -60,7 +62,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   @override
   void initState() {
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => refresh());
+    timer = Timer.periodic(Duration(minutes: 3), (Timer t) => refresh());
 
     setState(() {
       timestamp = phase1[0].timestamp;

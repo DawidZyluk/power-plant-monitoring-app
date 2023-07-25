@@ -19,6 +19,11 @@ const availableCategories = [
     color: Color.fromARGB(255, 255, 174, 0),
   ),
   Category(
+    id: 'c5',
+    title: 'Podsumowanie miesiąca',
+    color: Colors.pink,
+  ),
+  Category(
     id: 'c3',
     title: 'Odczyty wody',
     color: Colors.blue,
@@ -27,8 +32,7 @@ const availableCategories = [
     id: 'c2',
     title: 'Zapotrzebowanie',
     color: Colors.red,
-  ),
-  
+  ),  
 ];
 
 int combinedPhasesAvgPagesLoaded = 1;
@@ -39,16 +43,22 @@ List<PhaseReadings> phase1 = [];
 List<PhaseReadings> phase2 = [];
 List<PhaseReadings> phase3 = [];
 List<PhaseReadings> combinedPhasesAvg = [];
+List<PhaseReadings> combinedPhasesMonthAvg = [];
 List<ChartData> avgPowerActive = [];
 
 List<ElectricAvg> electricAvg = [];
 List<WaterReadings> waterReadings = [];
+
+DateTime now = new DateTime.now();
+DateTime date = new DateTime(now.year, now.month, now.day);
+String currentMonth = date.toString().substring(0,7);
 
 Future getAllData() async {
   await getPhases(false);
   await getElectricAvg(false);
   await getWaterReadings(false);
   await getAvgPowerActive(1);
+  await getCombinedPhasesMonthAvg(currentMonth);
   getCombinedPhases();
 }
 
@@ -85,7 +95,6 @@ Future getPhases(bool getMore) async {
     phase3.add(PhaseReadings(timestamp: formatTimestamp(item[0]), voltage: item[2], current: item[3], powerActive: item[4], powerReactive: item[5], powerApparent: item[6]));
   }
   getCombinedPhases();
-  print('combinedPhasesAvgPagesLoaded: $combinedPhasesAvgPagesLoaded  phase length: ${phase1.length}');
 }
 
 
@@ -117,7 +126,6 @@ Future getAvgPowerActive(double timeRangeDays) async {
       var latest = await APIService.fetchLatest();
       var oldestDate = DateTime.parse(oldest.dataset[0][0]);
       var latestDate = DateTime.parse(latest.dataset[0][0]);
-      print('oldest: ${oldestDate}    latest: ${latestDate}');
       var days = oldestDate.difference(latestDate).inDays;
       result = await APIService.fetchPowerActive(days.toDouble());
     }
@@ -136,6 +144,15 @@ void getCombinedPhases() {
     String powerReactiveAvg = ((phase1[index].powerReactive + phase2[index].powerReactive + phase3[index].powerReactive) / 3).toStringAsFixed(2);
     String powerApparentAvg = ((phase1[index].powerApparent + phase2[index].powerApparent + phase3[index].powerApparent) / 3).toStringAsFixed(2);
     combinedPhasesAvg.add(PhaseReadings(timestamp: timestamp, voltage: double.parse(voltageAvg), current: double.parse(currentAvg), powerActive: double.parse(powerActiveAvg), powerReactive: double.parse(powerReactiveAvg), powerApparent: double.parse(powerApparentAvg)));
+  }
+}
+
+Future getCombinedPhasesMonthAvg(String month) async {
+  combinedPhasesMonthAvg = [];
+  var result = await APIService.fetchCurrentMonth(month);
+  for(int index = 0; index < result.dataset.length; index++) {
+    var item = result.dataset[index];
+    combinedPhasesMonthAvg.add(PhaseReadings(timestamp: formatTimestamp(item[0]), voltage: item[1], current: item[2], powerActive: item[3], powerReactive: item[4], powerApparent: item[5]));
   }
 }
 

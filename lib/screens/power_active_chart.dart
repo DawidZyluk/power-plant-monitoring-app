@@ -53,7 +53,7 @@ class _PowerActiveChartState extends State<PowerActiveChart> {
                   color: Colors.white,
                   //borderRadius: BorderRadius.circular(12)
                 ),
-                height: 500,
+                height: 600,
                 padding: EdgeInsets.fromLTRB(0, 20, 20, 20),
                 // margin: EdgeInsets.fromLTRB(10, 100, 10, 120),
                 child: SfCartesianChart(
