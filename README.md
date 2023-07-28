@@ -1,7 +1,7 @@
 
 
 # Hydroelectric Power Plant Monitoring App
-This project is a water power plant monitoring application built using Flutter and QuestDB. It allows users to monitor and analyze various aspects of a water power plant, such as water levels, power output, and environmental conditions. The application provides real-time data visualization and historical data analysis capabilities, enabling operators and engineers to make informed decisions for optimal power plant performance.
+My first comercial project, a hydroelectric power plant monitoring application built using Flutter and QuestDB. It allows users to monitor and analyze various aspects of a water power plant, such as water levels, power output, and environmental conditions. The application provides real-time data visualization and historical data analysis capabilities, enabling operators and engineers to make informed decisions for optimal power plant performance.
 
 ## Introduction
 Water power plants are crucial for generating renewable energy from water resources. Efficient monitoring and analysis of power plant operations are essential to ensure optimal performance and identify potential issues. This project aims to develop a mobile application that enables real-time monitoring and data analysis for water power plants. By utilizing Flutter for the user interface and QuestDB for data storage and retrieval, the application provides a reliable and efficient solution for plant operators and engineers.
