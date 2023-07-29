@@ -1,6 +1,7 @@
 
 
 # Hydroelectric Power Plant Monitoring App
+![Frame 1](https://github.com/DawidZyluk/power-plant-monitoring-app/assets/91137753/6feb9b0f-eca3-4696-891c-e55fd452f7cb)
 My first comercial project, a hydroelectric power plant monitoring application built using Flutter and QuestDB. It allows users to monitor and analyze various aspects of a water power plant, such as water levels, power output, and environmental conditions. The application provides real-time data visualization and historical data analysis capabilities, enabling operators and engineers to make informed decisions for optimal power plant performance.
 
 ## Introduction
