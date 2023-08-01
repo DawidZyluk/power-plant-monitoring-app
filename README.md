@@ -42,7 +42,7 @@ To get started with the project, follow these steps:
 Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/your-repository.git
+git clone https://github.com/DawidZyluk/power-plant-monitoring-app
 ```
 Install Flutter by following the official Flutter installation guide.
 
